@@ -85,49 +85,49 @@ alter table detalle_comprobante add constraint fk1_servicio_detalleComp foreign 
 alter table detalle_comprobante add constraint fk2_comprobantePago_detalleComp foreign key (comprobante_id) references comprobante_pago (comprobante_id); 
 
 create table detalle_servicios (
-  servicio_transaccion_id serial not null, 
-  fecha_solicitud date not null, 
-  hora_solicitud time(7) not null, 
-  descripcion_solicitud varchar(150) not null, 
-  monto_servicio money not null, 
-  transaccion_id int not null, 
-  servicio_id int not null, 
-  primary key (servicio_transaccion_id) 
-); 
+  servicio_transaccion_id serial not null,
+  fecha_solicitud date not null,
+  hora_solicitud time(7) not null,
+  descripcion_solicitud varchar(150) not null,
+  monto_servicio money not null,
+  transaccion_id int not null,
+  servicio_id int not null,
+  primary key (servicio_transaccion_id)
+);
 
 --Restricciones
 alter table detalle_servicios add constraint fk1_detalle foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table detalle_servicios add constraint fk2_detalle foreign key (servicio_id) references servicio (servicio_id); 
 
 
-create table transaccion ( 
-  transaccion_id serial not null, 
-  fecha_transaccion date not null, 
+create table transaccion( 
+  transaccion_id serial not null,
+  fecha_transaccion date not null,
   hora_transaccion time(7) not null, 
-  tipo_transaccion char(1) not null, 
-  fecha_entrada date not null, 
-  hora_entrada date not null, 
-  fecha_salida date not null, 
-  hora_salida time(7) not null, 
-  estado_pago char(1) not null, 
-  habitacion_id int not null, 
-  cliente_id int not null, 
-  primary key (transaccion_id) 
-); 
+  tipo_transaccion char(1) not null,
+  fecha_entrada date not null,
+  hora_entrada date not null,
+  fecha_salida date not null,
+  hora_salida time(7) not null,
+  estado_pago char(1) not null,
+  habitacion_id int not null,
+  cliente_id int not null,
+  primary key (transaccion_id)
+);
 
 --Restricciones
 alter table transaccion add constraint fk1_habitacion_transaccion foreign key (habitacion_id) references habitacion(habitacion_id); 
 alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id); 
 
-create table comprobante_pago ( 
-  comprobante_id serial not null, 
-  fecha date not null, 
-  hora time(7) not null, 
-  tipo_comprobante char(1) not null, 
-  numero_comprobante int not null unique, 
-  monto_comprobante money not null, 
+create table comprobante_pago (
+  comprobante_id serial not null,
+  fecha date not null,
+  hora time(7) not null,
+  tipo_comprobante char(1) not null,
+  numero_comprobante int not null unique,
+  monto_comprobante money not null,
   transaccion_id int not null,
-  cliente_id int not null, 
+  cliente_id int not null,
   primary key (comprobante_pago_id)
 ); 
 
