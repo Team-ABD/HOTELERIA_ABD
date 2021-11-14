@@ -1,0 +1,11 @@
+--Nombre de tablas
+--Pais
+--Cliente
+--Tipo de Persona
+--Tipo de Documento
+--Servicio
+--Transaccion
+--Transaccion-Alojamiento
+--Comprobante de Pago
+--Detalle Comprobante
+--Detalle de Servicios
