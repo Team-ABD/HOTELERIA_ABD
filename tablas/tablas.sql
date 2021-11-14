@@ -34,14 +34,14 @@ create table cliente (
 alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documento_id) references tipo_documento(tipo_documento_id);
 alter table	cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
 
-create table tipo_documento(
-	tipo_documento_id char(2) primary key,
-	nombre varchar(21) not null
-);
-
 create table tipo_persona(
 	tipo_persona_id int primary key,
 	nombre char(16) not null
+);
+
+create table tipo_documento(
+	tipo_documento_id char(2) primary key,
+	nombre varchar(21) not null
 );
 
 create table pais ( 
