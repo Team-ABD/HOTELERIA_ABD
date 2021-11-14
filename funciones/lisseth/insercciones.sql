@@ -45,6 +45,7 @@ Begin
         return true;
     else
         return false;
+    end if;
 end;
 $$ language 'plpgsql';
 
@@ -60,6 +61,7 @@ Begin
     else TG_OP='DELET' 
     update habitacion set estado_habitacion='D' where habitacion_id=old.habitacion_id;
     return old;
+    end if;
 end;
 $$ language 'plpgsql';
 
