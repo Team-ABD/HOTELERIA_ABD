@@ -100,11 +100,12 @@ create table comprobante_pago (
   fecha date not null, 
   hora time not null, 
   tipo_comprobante char(1) not null, 
-  numero_comprobante int not null unique, 
+  numero_comprobante int not null unique, -- REVISAR TIPO DE DATO Y CREACIÓN DE TABLA TIPO_COMPROBANTE
   monto_comprobante money not null, 
   transaccion_id int not null,
   cliente_id int not null
-); 
+);
+
 --Restricciones
 alter table comprobante_pago add constraint fk1_transaccion_comprobante foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table comprobante_pago add constraint fk2_cliente_comprobante foreign key (cliente_id) references cliente (cliente_id); 
