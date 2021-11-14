@@ -100,7 +100,7 @@ create table comprobante_pago (
   fecha date not null, 
   hora time not null, 
   tipo_comprobante char(1) not null, 
-  numero_comprobante int not null unique, -- REVISAR TIPO DE DATO Y CREACIÓN DE TABLA TIPO_COMPROBANTE
+  numero_comprobante char(14) not null unique, -- REVISAR TIPO DE DATO Y CREACIÓN DE TABLA TIPO_COMPROBANTE
   monto_comprobante money not null, 
   transaccion_id int not null,
   cliente_id int not null
