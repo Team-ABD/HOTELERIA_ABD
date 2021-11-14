@@ -21,8 +21,8 @@ alter table cliente add constraint check_pais_cliente check (pais > 0);
 
 VALIDACION TABLA PAÍS
 alter table pais add constraint chk_pais_id_pais check (pais_id > 0); 
--- alter table pais add constraint chk_nombre_pais check (nombre_pais between );
--- alter table pais add constraint chk_continente check (continente ~ '^[a-z|A-Z|\s]{100}$');
+-- alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
+-- alter table pais add constraint chk_continente check (continente ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
 
 VALIDACION TABLA TRANSACCION
 alter table transaccion add constraint check_transaccion_id_transaccion check(transaccion_id > 0);
