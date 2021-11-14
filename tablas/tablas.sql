@@ -53,7 +53,7 @@ alter table cliente add constraint fk1_pais_cliente foreign key (pais_id) refere
 
 create table tipo_transaccion(
   tipo_transaccion_id int primary key,
-  nombre varchar(15) not null
+  descripcion varchar(15) not null
 );
 
 create table transaccion ( 
