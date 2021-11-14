@@ -36,12 +36,12 @@ alter table	cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_per
 
 create table tipo_persona(
 	tipo_persona_id int primary key,
-	nombre char(16) not null
+	descripcion char(16) not null
 );
 
 create table tipo_documento(
 	tipo_documento_id char(2) primary key,
-	nombre varchar(21) not null
+	descripcion varchar(21) not null
 );
 
 create table pais ( 
