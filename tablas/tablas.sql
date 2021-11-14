@@ -85,7 +85,7 @@ alter table detalle_servicios add constraint fk1_detalle foreign key (transaccio
 alter table detalle_servicios add constraint fk2_detalle foreign key (servicio_id) references servicio (servicio_id); 
 
 create table tipo_transaccion(
-  tipo_transaccion_id int primary key,
+  tipo_transaccion_id int primary key, 
   nombre varchar(15) not null
 );
 
