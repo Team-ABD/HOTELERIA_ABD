@@ -80,4 +80,3 @@ alter table comprobante_pago add constraint check_monto_comprobante_comprobante_
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
 
-
