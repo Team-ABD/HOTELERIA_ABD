@@ -79,4 +79,3 @@ alter table comprobante_pago add constraint check_numero_comprobante_pago check 
 alter table comprobante_pago add constraint check_monto_comprobante_comprobante_pago check (monto_comprobante > 0 :: money);
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
-
