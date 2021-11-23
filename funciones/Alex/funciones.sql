@@ -13,7 +13,7 @@ Begin
 	GROUP BY hab.numero
 	order by 2 desc;
 end;
-$$ language 'plpgsql
+
 - cantidad de habitacion por año
 Create or replace function fn_cantidadHabxaño( año int) returns 
 	table(cantidad_habitaciones bigint) as
@@ -28,4 +28,15 @@ Begin
     group by año;
 end;
 $$ language 'plpgsql';
+- porcentaje  de transaccion por tipo de persona
+create or replace function fn_porcentaje_transaccion_por_tipo_persona(tp char(1)) returns numeric(5,2) as
+$$
+declare
+	porcentaje numeric(5,2);
+begin
+	select cast( (count(*)*100.0) /( select count(*) into porcentaje from transaccion) as numeric(5,2)) 
+	from transaccion tr inner join cliente cl on cl.clienteid=tr.clienteid where tipo_persona = upper(tp);
+	return porcentaje;
+end;
+$$ language 'plpgsql'
 
