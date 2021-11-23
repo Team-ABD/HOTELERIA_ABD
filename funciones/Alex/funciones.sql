@@ -13,4 +13,19 @@ Begin
 	GROUP BY hab.numero
 	order by 2 desc;
 end;
+$$ language 'plpgsql
+- cantidad de habitacion por año
+Create or replace function fn_cantidadHabxaño( año int) returns 
+	table(cantidad_habitaciones bigint) as
+$$
+Declare
+Begin
+	return query
+	Select 
+	count(*) as cantidad_habitaciones
+    from habitacion hab inner join transaccion tra on hab.habitacionid=tra.habitacionid
+    where extract(year from tra.fecha_alojamiento)=año
+    group by año;
+end;
 $$ language 'plpgsql';
+
