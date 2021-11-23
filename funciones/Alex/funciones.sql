@@ -28,6 +28,7 @@ Begin
     group by año;
 end;
 $$ language 'plpgsql';
+
 - porcentaje  de transaccion por tipo de persona
 create or replace function fn_porcentaje_transaccion_por_tipo_persona(tp char(1)) returns numeric(5,2) as
 $$
