@@ -6,7 +6,7 @@ create table servicio (
 
 create table tipo_habitacion ( 
   tipo_habitacion_id serial primary key, 
-  descripcion_tipo char(1), 
+  descripcion_tipo varchar(100), 
   precio_base money not null 
 ); 
 
