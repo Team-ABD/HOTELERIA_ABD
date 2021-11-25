@@ -17,7 +17,10 @@ Begin
        inner join transaccion using(habitacion_id)
        where transaccion_id=id_transaccion;
        
-       Select fecha_entrada into f_entrada,fecha_salida into f_salida from Transaccion
+       Select fecha_entrada into f_entrada from Transaccion
+       where transaccion_id=id_transaccion;
+
+       Select fecha_salida into f_salida from Transaccion
        where transaccion_id=id_transaccion;
 
        if fecha_entrada!=null and fecha_salida!=null then
