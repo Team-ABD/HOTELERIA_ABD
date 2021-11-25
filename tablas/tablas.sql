@@ -14,10 +14,10 @@ create table habitacion (
   habitacion_id serial primary key, 
   numero_habitacion int not null, 
   estado_habitacion char(1), 
-  tipo_habitacion int not null
+  tipo_habitacion_id int not null
 ); 
 --Restricciones
-alter table habitacion add constraint fk1_tipoHab_habitacion foreign key (tipo_habitacion) references tipo_habitacion(tipo_habitacion_id); 
+alter table habitacion add constraint fk1_tipoHab_habitacion foreign key (tipo_habitacion_id) references tipo_habitacion(tipo_habitacion_id); 
 
 create table tipo_documento(
 	tipo_documento_id char(2) primary key,
@@ -38,8 +38,7 @@ create table pais (
 create table cliente (
   cliente_id serial primary key, 
   tipo_documento_id char(1) not null, 
-  apellidos varchar(100), 
-  nombres varchar(100) not null, 
+  nombre varchar(100) not null, 
   fecha_nacimiento date not null, 
   tipo_persona_id int not null, 
   sexo char(1) not null, 
@@ -60,7 +59,7 @@ create table transaccion (
   transaccion_id serial primary key, 
   fecha_transaccion date not null, 
   hora_transaccion time not null, 
-  tipo_transaccion char(1) not null, 
+  tipo_transaccion_id char(1) not null, 
   fecha_entrada date not null, 
   hora_entrada date not null, 
   fecha_salida date not null, 
@@ -71,7 +70,8 @@ create table transaccion (
 ); 
 --Restricciones
 alter table transaccion add constraint fk1_habitacion_transaccion foreign key (habitacion_id) references habitacion(habitacion_id); 
-alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id); 
+alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id);
+alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_transaccion_id) references tipo_transaccion(tipo_transaccion_id);
 
 create table transaccion_alojamiento(
   alojamiento_id serial primary key, 
@@ -95,12 +95,17 @@ create table detalle_servicios (
 alter table detalle_servicios add constraint fk1_detalle foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table detalle_servicios add constraint fk2_detalle foreign key (servicio_id) references servicio (servicio_id); 
 
+create table tipo_comprobante (
+	tipo_comprobante_id char(2) primary key,
+	descripcion varchar(7) not null
+);
+
 create table comprobante_pago ( 
   comprobante_id serial primary key, 
   fecha date not null, 
   hora time not null, 
-  tipo_comprobante char(1) not null, 
-  numero_comprobante char(14) not null unique, -- REVISAR TIPO DE DATO Y CREACIÓN DE TABLA TIPO_COMPROBANTE
+  tipo_comprobante_id char(1) not null, 
+  numero_comprobante char(14) not null unique,
   monto_comprobante money not null, 
   transaccion_id int not null,
   cliente_id int not null
@@ -109,6 +114,7 @@ create table comprobante_pago (
 --Restricciones
 alter table comprobante_pago add constraint fk1_transaccion_comprobante foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table comprobante_pago add constraint fk2_cliente_comprobante foreign key (cliente_id) references cliente (cliente_id); 
+alter table comprobante_pago add constraint fk3_tipo_comprobante foreign key (tipo_comprobante_id) references tipo_comprobante (tipo_comprobante_id);
 
 create table detalle_comprobante ( 
   comprobante_det_id serial primary key, 
@@ -118,4 +124,4 @@ create table detalle_comprobante (
 );
 --Restricciones
 alter table detalle_comprobante add constraint fk1_servicio_detalleComp foreign key (servicio_id) references servicio (servicio_id); 
-alter table detalle_comprobante add constraint fk2_comprobantePago_detalleComp foreign key (comprobante_id) references comprobante_pago (comprobante_id); 
+alter table detalle_comprobante add constraint fk2_comprobantePago_detalleComp foreign key (comprobante_id) references comprobante_pago (comprobante_id);
