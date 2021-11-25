@@ -19,7 +19,7 @@ Begin
        
        Select fecha_entrada into f_entrada from Transaccion
        where transaccion_id=id_transaccion;
-
+       
        Select fecha_salida into f_salida from Transaccion
        where transaccion_id=id_transaccion;
 
@@ -45,4 +45,3 @@ Begin
     return cantidad_personas;
 end;
 $$ language 'plpgsql';
-
