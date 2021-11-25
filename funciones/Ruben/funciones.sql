@@ -9,10 +9,10 @@ porcen varchar;
 Begin
            	--Mostramos el total de personas que se hospedaron en un tiempo determinado
           	Select count(*) into cantidadTot
-          	from transaccion where fecharegistro between fechaini and fechafin;
+          	from transaccion where fecha_transaccion between fechaini and fechafin;
           	--Rescatamos la informacion sobre el total de personas se hospedaron con reserva en un determinado tiempo.
           	Select count(*) into cantidadReserv
-          	from transaccion where tipo =True and fecharegistro between fechaini and fechafin;
+          	from transaccion where tipo =true and fecha_transaccion between fechaini and fechafin;
           --al final se obtiene el porcentaje de las personas hospedadas 
           	porcentaje=cantidadReserv*100/cantidadTot;
           	porcen=porcentaje||'%';
