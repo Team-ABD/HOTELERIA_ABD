@@ -37,4 +37,3 @@ Begin
     return cantidad_personas;
 end;
 $$ language 'plpgsql';
-    
