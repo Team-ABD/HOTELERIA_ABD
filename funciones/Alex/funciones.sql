@@ -1,4 +1,4 @@
-- Habitación mas pedidas por año
+-- Habitación mas pedidas por año
 Create or replace function fn_habitacionMasPedidaxAño(año int) returns 
 	table(habitacion int, cantidad_clientes bigint) as	
 $$
@@ -14,7 +14,7 @@ Begin
 	order by 2 desc;
 end;
 
-- cantidad de habitacion por año
+-- cantidad de habitacion por año
 Create or replace function fn_cantidadHabxaño( año int) returns 
 	table(cantidad_habitaciones bigint) as
 $$
@@ -29,7 +29,7 @@ Begin
 end;
 $$ language 'plpgsql';
 
-- porcentaje  de transaccion por tipo de persona
+-- porcentaje  de transaccion por tipo de persona
 create or replace function fn_porcentaje_transaccion_por_tipo_persona(tp char(1)) returns numeric(5,2) as
 $$
 declare
