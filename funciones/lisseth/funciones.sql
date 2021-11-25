@@ -6,6 +6,8 @@ Declare
 precio_habitacion money;
 cantidad_dias int;
 monto_total_servicio money;
+f_entrada date;
+f_salida date;
 Begin
        select sum(monto_servicio) into monto_total_servicio from detalle_servicios
        where transaccion_id=id_transaccion;
@@ -15,6 +17,9 @@ Begin
        inner join transaccion using(habitacion_id)
        where transaccion_id=id_transaccion;
        
+       Select fecha_entrada into f_entrada,fecha_salida into f_salida from Transaccion
+       where transaccion_id=id_transaccion;
+
        if fecha_entrada!=null and fecha_salida!=null then
        select fecha_entrada-fecha_salida into cantidad_dias from Transaccion
        where transaccion_id=id_transaccion;
