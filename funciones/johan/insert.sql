@@ -23,5 +23,8 @@ VALUES
 
 ALTER TABLE tipo_habitacion ALTER COLUMN descripcion_tipo type character varying (100);
 select * from tipo_habitacion;
-insert into tipo_habitacion (descripcion_tipo, precio_base)
-	values ('Individual', 100), ('Doble', 190),('Queen', 300),('Matrimonial', 250),('Suite ejecutiva', 400),('Suite presidencial', 500);
+
+INSERT INTO tipo_habitacion 
+	(descripcion_tipo, precio_base)
+VALUES 
+	('Individual', 100), ('Doble', 190),('Queen', 300),('Matrimonial', 250),('Suite ejecutiva', 400),('Suite presidencial', 500);
