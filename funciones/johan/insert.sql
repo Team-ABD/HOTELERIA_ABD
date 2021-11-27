@@ -27,4 +27,9 @@ select * from tipo_habitacion;
 INSERT INTO tipo_habitacion 
 	(descripcion_tipo, precio_base)
 VALUES 
-	('Individual', 100), ('Doble', 190),('Queen', 300),('Matrimonial', 250),('Suite ejecutiva', 400),('Suite presidencial', 500);
+	('Individual', 100),
+	('Doble', 190),
+	('Queen', 300),
+	('Matrimonial', 250),
+	('Suite ejecutiva', 400),
+	('Suite presidencial', 500);
