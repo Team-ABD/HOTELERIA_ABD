@@ -6,14 +6,14 @@ create table servicio (
 
 create table tipo_habitacion ( 
   tipo_habitacion_id serial primary key, 
-  descripcion_tipo varchar(100), 
+  descripcion_tipo char(1), 
   precio_base money not null 
 ); 
 
 create table habitacion ( 
   habitacion_id serial primary key, 
   numero_habitacion int not null, 
-  estado_habitacion char(1),
+  estado_habitacion char(1), 
   tipo_habitacion_id int not null
 ); 
 --Restricciones
@@ -37,19 +37,18 @@ create table pais (
 
 create table cliente (
   cliente_id serial primary key, 
-  tipo_documento_id char(1) not null, 
+  tipo_documento_id char(2) not null, 
   nombre varchar(100) not null, 
   fecha_nacimiento date not null, 
   tipo_persona_id int not null, 
   sexo char(1) not null, 
-  numero_documento varchar(12) not null unique, 
+  numero_documento varchar(15) not null unique, 
   pais_id int not null
 );
-
 --Restricciones
 alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documento_id) references tipo_documento(tipo_documento_id);
 alter table	cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
-alter table cliente add constraint fk1_pais_cliente foreign key (pais_id) references pais (pais_id);
+alter table cliente add constraint fk3_pais_cliente foreign key (pais_id) references pais (pais_id);
 
 create table tipo_transaccion(
   tipo_transaccion_id int primary key,
@@ -60,9 +59,9 @@ create table transaccion (
   transaccion_id serial primary key, 
   fecha_transaccion date not null, 
   hora_transaccion time not null, 
-  tipo_transaccion_id char(1) not null, 
+  tipo_transaccion_id int not null, 
   fecha_entrada date not null, 
-  hora_entrada date not null, 
+  hora_entrada time not null, 
   fecha_salida date not null, 
   hora_salida time not null, 
   estado_pago char(1) not null, 
@@ -103,7 +102,7 @@ create table tipo_comprobante (
 
 create table comprobante_pago ( 
   comprobante_id serial primary key, 
-  fecha date not null, 
+  fecha_comprobante date not null, 
   hora time not null, 
   tipo_comprobante_id char(1) not null, 
   numero_comprobante char(14) not null unique,
