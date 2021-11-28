@@ -55,32 +55,35 @@ alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá
 alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
 
 create table cliente (
-  cliente_id int primary key,
-  tipo_documento_id char(2) not null,
+  cliente_id serial primary key,
+  tipo_documento_id int not null,
   nombre varchar(100) not null,
   fecha_nacimiento date,
   tipo_persona_id int not null,
   sexo char(1),
-  numero_documento varchar(15) not null unique,
+  numero_documento varchar(15) not null,
   pais_id int not null
 );
 --Restricciones
 alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documento_id) references tipo_documento(tipo_documento_id);
 alter table cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
 alter table cliente add constraint fk3_pais_cliente foreign key (pais_id) references pais (pais_id);
-alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id in ('01','04','06','07','11','00'));
+alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id >0);
 alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
-alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\a-z\sá-úÁ-Ú]{8,12}$');
+alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\A-Z]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
+alter table cliente add constraint unique (tipo_documento_id, numero_documento);
 
 create table tipo_transaccion(
-  tipo_transaccion_id serial primary key,
-  descripcion varchar(15) not null
+  tipo_transaccion_id int primary key,
+  descripcion varchar(15) not null unique
 );
+
 --Restricciones
+alter table tipo_transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
 alter table tipo_transaccion add constraint check_descripcion_tipo_transaccion check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,15}$');
 
 create table transaccion ( 
@@ -90,8 +93,8 @@ create table transaccion (
   tipo_transaccion_id int not null, 
   fecha_entrada date not null, 
   hora_entrada time not null, 
-  fecha_salida date not null, 
-  hora_salida time not null, 
+  fecha_salida date null, 
+  hora_salida time null, 
   estado_pago char(1) not null, 
   habitacion_id int not null, 
   cliente_id int not null
@@ -101,11 +104,11 @@ alter table transaccion add constraint fk1_habitacion_transaccion foreign key (h
 alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id);
 alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_transaccion_id) references tipo_transaccion(tipo_transaccion_id);
 alter table transaccion alter column fecha_transaccion set default current_date;
-alter table transaccion alter column fecha_transaccion set default current_time;
+alter table transaccion alter column hora_transaccion set default current_time;
 alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
 alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
 alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
-alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','D'));
+alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','C'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
 
@@ -134,19 +137,19 @@ create table detalle_servicios (
 alter table detalle_servicios add constraint fk1_detalle foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table detalle_servicios add constraint fk2_detalle foreign key (servicio_id) references servicio (servicio_id); 
 alter table detalle_servicios add constraint check_servicio_transaccion_id_detalle_servicios check (servicio_transaccion_id > 0);
-alter table detalle_servicios add constraint check_fecha_solicitud_detalle_servicios check (fecha_solicitud >= current_date);
-alter table detalle_servicios add constraint check_descripcion_solicitud_detalle_servicios check (descripcion_solicitud ~* '^[[a-z\sá-úÁ-Ú]{1,150}$');
+alter table transaccion alter column fecha_solicitud set default current_date;
+alter table transaccion alter column hora_solicitud set default current_time;
 alter table detalle_servicios add constraint check_monto_servicio_detalle_servicios check (monto_servicio > 0.00 :: money);
 alter table detalle_servicios add constraint check_transaccion_id_detalle_servicios check (transaccion_id > 0);
 alter table detalle_servicios add constraint check_servicio_id_detalle_servicios check (servicio_id > 0);
 
 create table tipo_comprobante (
-	tipo_comprobante_id char(2) primary key,
+	tipo_comprobante_id int primary key,
 	descripcion varchar(7) not null
 );
 --Restricciones
-alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (tipo_comprobante_id in ('01','03'));
-alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (descripcion in ('FACTURA','BOLETA'));
+alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (tipo_comprobante_id > 0);
+alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (descripcion in ('Factura','Boleta'));
 
 create table comprobante_pago ( 
   comprobante_id serial primary key, 
