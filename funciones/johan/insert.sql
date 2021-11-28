@@ -61,3 +61,8 @@ VALUES
 	('07', 'Maria Lopez Fernandez', '14-05-1992', 1, 'F', 'AZ3852741523', 91),
 	('11', 'Carlos Benavides Diaz', '11-07-1984', 1, 'M', '789456123123951', 82),
 	('00', 'Nicolas Acuña Bonilla', '22-12-1994', 1, 'M', 'GD1852654321654', 73);
+
+INSERT INTO tipo_transaccion
+	(tipo_transaccion_id, descripcion)
+VALUES
+	(1,'Crédito'),(2,'Contado');
