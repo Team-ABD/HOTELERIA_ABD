@@ -12,7 +12,7 @@ create table tipo_habitacion (
 
 create table habitacion ( 
   habitacion_id serial primary key, 
-  numero_habitacion int not null, 
+  numero_habitacion int not null unique, 
   estado_habitacion char(1), 
   tipo_habitacion_id int not null
 ); 
