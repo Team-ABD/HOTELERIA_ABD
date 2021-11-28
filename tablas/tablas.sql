@@ -25,7 +25,7 @@ create table tipo_documento(
 );
 
 create table tipo_persona(
-	tipo_persona_id int primary key,
+	tipo_persona_id char(2) primary key,
 	descripcion char(16) not null
 );
 
