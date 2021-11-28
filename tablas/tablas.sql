@@ -36,11 +36,12 @@ create table tipo_documento(
 alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,2}$');
 
 create table tipo_persona(
-	tipo_persona_id serial primary key,
+	tipo_persona_id int primary key,
 	descripcion varchar(16) not null
 );
 --Restricciones
-alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,16}$');
+alter table tipo_persona add constraint check_tipo_persona_id_tipo_persona check (tipo_persona_id > 0);
+alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion in ('Persona Natural', 'Persona Jurídica'));
 
 create table pais ( 
   pais_id serial primary key, 
@@ -48,7 +49,7 @@ create table pais (
   continente varchar(9) not null
 ); 
 --Restricciones
-alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');
+alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');s
 alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
 
 create table cliente (
