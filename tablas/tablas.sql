@@ -187,6 +187,7 @@ create table detalle_comprobante (
 );
 
 --Restricciones
+
 alter table detalle_comprobante add constraint fk1_servicio_detalleComp foreign key (servicio_id) references servicio (servicio_id); 
 alter table detalle_comprobante add constraint fk2_comprobantePago_detalleComp foreign key (comprobante_id) references comprobante_pago (comprobante_id);
 alter table detalle_comprobante add constraint check_comprobante_det_id_detalle_comprobante check (comprobante_det_id > 0);
