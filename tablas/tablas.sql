@@ -30,11 +30,11 @@ alter table habitacion add constraint check_estado_habitacion_habitacion check (
 alter table habitacion add constraint check_tipo_habitacion_habitacion check (tipo_habitacion_id > 0);
 
 create table tipo_documento(
-	tipo_documento_id char(2) primary key,
+	tipo_documento_id serial primary key,
 	descripcion varchar(21) not null
 );
 --Restricciones
-alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
+-- alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
 alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,2}$');
 
 create table tipo_persona(
