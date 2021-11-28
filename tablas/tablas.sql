@@ -44,12 +44,14 @@ alter table tipo_persona add constraint check_tipo_persona_id_tipo_persona check
 alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion in ('Persona Natural', 'Persona Jurídica'));
 
 create table pais ( 
-  pais_id serial primary key, 
+  pais_id int primary key, 
   nombre_pais varchar(100) not null unique, 
   continente varchar(9) not null
-); 
+);
+
 --Restricciones
-alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');s
+alter table pais add constraint chk_pais_id_pais check (pais_id > 0);
+alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');
 alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
 
 create table cliente (
