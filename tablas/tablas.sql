@@ -97,13 +97,14 @@ create table transaccion (
 alter table transaccion add constraint fk1_habitacion_transaccion foreign key (habitacion_id) references habitacion(habitacion_id); 
 alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id);
 alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_transaccion_id) references tipo_transaccion(tipo_transaccion_id);
+alter table transaccion alter column fecha_transaccion set default current_date;
+alter table transaccion alter column fecha_transaccion set default current_time;
 alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
+alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
+alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','D'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
-alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
-alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
-alter table transaccion add constraint check_fecha_transaccion_transaccion check (fecha_transaccion >= current_date);
 
 create table transaccion_alojamiento(
   alojamiento_id serial primary key, 
