@@ -44,7 +44,8 @@ create table cliente (
   sexo char(1) not null, 
   numero_documento varchar(12) not null unique, 
   pais_id int not null
-); 
+);
+
 --Restricciones
 alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documento_id) references tipo_documento(tipo_documento_id);
 alter table	cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);

@@ -33,3 +33,4 @@ VALUES
 	('Matrimonial', 250),
 	('Suite ejecutiva', 400),
 	('Suite presidencial', 500);
+
