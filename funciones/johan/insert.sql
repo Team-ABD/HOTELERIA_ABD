@@ -66,3 +66,4 @@ INSERT INTO tipo_transaccion
 	(tipo_transaccion_id, descripcion)
 VALUES
 	(1,'Crédito'),(2,'Contado');
+	
