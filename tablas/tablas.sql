@@ -52,7 +52,7 @@ alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá
 alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
 
 create table cliente (
-  cliente_id serial primary key,
+  cliente_id int primary key,
   tipo_documento_id char(2) not null,
   nombre varchar(100) not null,
   fecha_nacimiento date,
