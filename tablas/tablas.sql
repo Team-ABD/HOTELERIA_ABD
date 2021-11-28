@@ -4,7 +4,6 @@ create table servicio (
   nombre_servicio varchar(100) not null
 ); 
 --Restricciones
-alter table servicio add constraint check_servicio_id_servicio check (servicio_id > 0);
 alter table servicio add constraint check_nombre_servicio_servicio check (nombre_servicio ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
 
 create table tipo_habitacion ( 
