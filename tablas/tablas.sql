@@ -1,24 +1,24 @@
 --Listado de servicios que ofrece(comida, etc.)
 create table servicio ( 
   servicio_id serial primary key,
-  nombre_servicio varchar(100) not null
+  nombre_servicio varchar(100) not null unique
 ); 
 --Restricciones
-alter table servicio add constraint check_nombre_servicio_servicio check (nombre_servicio ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
+alter table servicio add constraint check_nombre_servicio_servicio check (nombre_servicio ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 
 create table tipo_habitacion ( 
   tipo_habitacion_id serial primary key, 
-  descripcion_tipo varchar(100), 
-  precio_base money not null 
+  descripcion_tipo varchar(100) not null unique, 
+  precio_base money not null
 ); 
 --Restricciones
-alter table tipo_habitacion add constraint check_descripcion_tipo_tipo_habitacion check (descripcion_tipo  ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
+alter table tipo_habitacion add constraint check_descripcion_tipo_tipo_habitacion check (descripcion_tipo  ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table tipo_habitacion add constraint check_precio_base_tipo_habitacio check (precio_base > 0.00 :: money);
 
 create table habitacion ( 
   habitacion_id serial primary key, 
   numero_habitacion int not null unique, 
-  estado_habitacion char(1), 
+  estado_habitacion char(1) not null, 
   tipo_habitacion_id int not null
 ); 
 --Restricciones
@@ -33,14 +33,14 @@ create table tipo_documento(
 );
 --Restricciones
 -- alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
-alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,2}$');
+alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,2}$');
 
 create table tipo_persona(
 	tipo_persona_id serial primary key,
 	descripcion varchar(16) not null
 );
 --Restricciones
-alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,16}$');
+alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,16}$');
 
 create table pais ( 
   pais_id serial primary key, 
@@ -78,7 +78,7 @@ create table tipo_transaccion(
   descripcion varchar(15) not null
 );
 --Restricciones
-alter table tipo_transaccion add constraint check_descripcion_tipo_transaccion check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,15}$');
+alter table tipo_transaccion add constraint check_descripcion_tipo_transaccion check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,15}$');
 
 create table transaccion ( 
   transaccion_id serial primary key, 
