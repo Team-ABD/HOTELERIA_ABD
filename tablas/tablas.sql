@@ -61,11 +61,7 @@ create table transaccion (
   hora_transaccion time not null, 
   tipo_transaccion_id int not null, 
   fecha_entrada date not null, 
-<<<<<<< HEAD
   hora_entrada time not null, 
-=======
-  hora_entrada  time not null,
->>>>>>> 8535bde4485f2789ba478a1b1515a1258e59ca27
   fecha_salida date not null, 
   hora_salida time not null, 
   estado_pago char(1) not null, 
