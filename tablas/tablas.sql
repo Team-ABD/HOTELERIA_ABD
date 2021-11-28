@@ -12,8 +12,7 @@ create table tipo_habitacion (
   precio_base money not null 
 ); 
 --Restricciones
-alter table tipo_habitacion add constraint check_descripcion_tipo_tipo_habitacion check (descripcion_tipo in ('D','M','S'));
-alter table tipo_habitacion add constraint check_tipo_id_tipo_habitacion check (tipo_habitacion_id > 0);
+alter table tipo_habitacion add constraint check_descripcion_tipo_tipo_habitacion check (descripcion_tipo  ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
 alter table tipo_habitacion add constraint check_precio_base_tipo_habitacio check (precio_base > 0.00 :: money);
 
 create table habitacion ( 
@@ -24,7 +23,6 @@ create table habitacion (
 ); 
 --Restricciones
 alter table habitacion add constraint fk1_tipoHab_habitacion foreign key (tipo_habitacion_id) references tipo_habitacion(tipo_habitacion_id); 
-alter table habitacion add constraint check_habitacion_id_habitacion check (habitacion_id > 0);
 alter table habitacion add constraint check_numero_habitacion_habitacion check (numero_habitacion > 0);
 alter table habitacion add constraint check_estado_habitacion_habitacion check (estado_habitacion in ('D','O','R','M'));
 alter table habitacion add constraint check_tipo_habitacion_habitacion check (tipo_habitacion_id > 0);
@@ -35,16 +33,14 @@ create table tipo_documento(
 );
 --Restricciones
 alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
-alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,2}$');
+alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,21}$');
 
 create table tipo_persona(
-	tipo_persona_id char(2) primary key,
-	descripcion char(16) not null
+	tipo_persona_id serial primary key,
+	descripcion varchar(16) not null
 );
 --Restricciones
-alter table tipo_persona add constraint check_tipo_persona_id_tipo_persona check (tipo_persona_id > 0);
 alter table tipo_persona add constraint check_descripcion_tipo_persona check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,16}$');
-
 
 create table pais ( 
   pais_id serial primary key, 
@@ -52,10 +48,8 @@ create table pais (
   continente varchar(9) not null
 ); 
 --Restricciones
-alter table pais add constraint chk_pais_id_pais check (pais_id > 0); 
 alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');
 alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
-
 
 create table cliente (
   cliente_id serial primary key,
@@ -71,23 +65,20 @@ create table cliente (
 alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documento_id) references tipo_documento(tipo_documento_id);
 alter table cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
 alter table cliente add constraint fk3_pais_cliente foreign key (pais_id) references pais (pais_id);
-alter table cliente add constraint check_cliente_id_cliente check (cliente_id > 0);
-alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
+alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id in ('01','04','06','07','11','00'));
 alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
-alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id in ('01','04','06','07','11','00'));
+alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
 alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\a-z\sá-úÁ-Ú]{8,12}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
 
 create table tipo_transaccion(
-  tipo_transaccion_id int primary key,
+  tipo_transaccion_id serial primary key,
   descripcion varchar(15) not null
 );
 --Restricciones
-alter table tipo_transaccion add constraint check_tipo_transaccion_id_tipo_transaccion check (tipo_transaccion_id > 0);
 alter table tipo_transaccion add constraint check_descripcion_tipo_transaccion check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,15}$');
-
 
 create table transaccion ( 
   transaccion_id serial primary key, 
@@ -106,8 +97,7 @@ create table transaccion (
 alter table transaccion add constraint fk1_habitacion_transaccion foreign key (habitacion_id) references habitacion(habitacion_id); 
 alter table transaccion add constraint fk2_cliente_transaccion foreign key (cliente_id) references cliente (cliente_id);
 alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_transaccion_id) references tipo_transaccion(tipo_transaccion_id);
-alter table transaccion add constraint check_transaccion_id_transaccion check(transaccion_id > 0);
-alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id in (1,2));
+alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','D'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
