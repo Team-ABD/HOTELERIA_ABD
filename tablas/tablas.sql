@@ -36,13 +36,13 @@ create table pais (
 ); 
 
 create table cliente (
-  cliente_id serial primary key, 
-  tipo_documento_id char(2) not null, 
-  nombre varchar(100) not null, 
-  fecha_nacimiento date not null, 
-  tipo_persona_id int not null, 
-  sexo char(1) not null, 
-  numero_documento varchar(15) not null unique, 
+  cliente_id serial primary key,
+  tipo_documento_id char(2) not null,
+  nombre varchar(100) not null,
+  fecha_nacimiento date,
+  tipo_persona_id int not null,
+  sexo char(1),
+  numero_documento varchar(15) not null unique,
   pais_id int not null
 );
 --Restricciones
