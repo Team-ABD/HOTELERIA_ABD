@@ -9,7 +9,7 @@ alter table servicio add constraint check_nombre_servicio_servicio check (nombre
 
 create table tipo_habitacion ( 
   tipo_habitacion_id serial primary key, 
-  descripcion_tipo char(1), 
+  descripcion_tipo varchar(100), 
   precio_base money not null 
 ); 
 --Restricciones
