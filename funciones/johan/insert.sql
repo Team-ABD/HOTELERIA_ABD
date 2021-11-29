@@ -1,8 +1,8 @@
 INSERT INTO tipo_comprobante
 	(tipo_comprobante_id, descripcion)
 VALUES
-	('01','Factura'),
-	('03','Boleta');
+	(1,'Factura'),
+	(2,'Boleta');
 	
 
 INSERT INTO tipo_Persona
@@ -14,12 +14,12 @@ VALUES
 INSERT INTO tipo_documento
 	(tipo_documento_id, descripcion)
 VALUES
-	('01','DNI'),
-	('04','Carnet de Extrangería'),
-	('06','RUC'),
-	('07','Pasaporte'),
-	('11','Partida de Nacimiento'),
-	('00','Otros');
+	(1,'DNI'),
+	(2,'Carnet de Extrangería'),
+	(3,'RUC'),
+	(4,'Pasaporte'),
+	(5,'Partida de Nacimiento'),
+	(6,'Otros');
 
 ALTER TABLE tipo_habitacion ALTER COLUMN descripcion_tipo type character varying (100);
 select * from tipo_habitacion;
@@ -50,17 +50,17 @@ VALUES
 INSERT INTO cliente
 	(tipo_documento_id, nombre, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
 VALUES
-	('01','Armando Paredes de las Casas','05-02-1990',1,'M','32165498',82),
-	('07','Fabiola Estrada Barba','06-04-1989',1,'F','LK1598478453',78),
-	('06','Constructora San Agustín SAC',null,2,null,'20659832875',82),
-	('06','Directv Peru SRL',null,2,null,'20951334667',82),
-	('06','Repsol SA',null,2,null,'20546987231',152),
-	('01', 'Julian Guevara Carrasco', '10-01-1989', 1, 'M', '79623451', 82),
-	('04', 'Lucia Vargas Soriano', '12-03-1995', 1, 'F', 'AC4963527856', 64),
-	('06', 'Mario Sanchez Ruiz', '25-11-1986', 1, 'M', '10185296378', 82),
-	('07', 'Maria Lopez Fernandez', '14-05-1992', 1, 'F', 'AZ3852741523', 91),
-	('11', 'Carlos Benavides Diaz', '11-07-1984', 1, 'M', '789456123123951', 82),
-	('00', 'Nicolas Acuña Bonilla', '22-12-1994', 1, 'M', 'GD1852654321654', 73);
+	(1,'Armando Paredes de las Casas','05-02-1990',1,'M','32165498',82),
+	(4,'Fabiola Estrada Barba','06-04-1989',1,'F','LK1598478453',78),
+	(3,'Constructora San Agustín SAC',null,2,null,'20659832875',82),
+	(3,'Directv Peru SRL',null,2,null,'20951334667',82),
+	(3,'Repsol SA',null,2,null,'20546987231',152),
+	(1, 'Julian Guevara Carrasco', '10-01-1989', 1, 'M', '79623451', 82),
+	(2, 'Lucia Vargas Soriano', '12-03-1995', 1, 'F', 'AC4963527856', 64),
+	(3, 'Mario Sanchez Ruiz', '25-11-1986', 1, 'M', '10185296378', 82),
+	(4, 'Maria Lopez Fernandez', '14-05-1992', 1, 'F', 'AZ3852741523', 91),
+	(5, 'Carlos Benavides Diaz', '11-07-1984', 1, 'M', '789456123123951', 82),
+	(6, 'Nicolas Acuña Bonilla', '22-12-1994', 1, 'M', 'GD1852654321654', 73);
 
 INSERT INTO tipo_transaccion
 	(tipo_transaccion_id, descripcion)
