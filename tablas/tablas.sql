@@ -57,6 +57,7 @@ alter table pais add constraint chk_continente check (continente ~* '^[a-z\sรก-ร
 create table cliente (
   cliente_id serial primary key,
   tipo_documento_id int not null,
+  apellidos varchar(100) null,
   nombre varchar(100) not null,
   fecha_nacimiento date,
   tipo_persona_id int not null,
