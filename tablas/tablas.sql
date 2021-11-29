@@ -57,6 +57,7 @@ alter table pais add constraint chk_continente check (continente ~* '^[a-z\sรก-ร
 create table cliente (
   cliente_id serial primary key,
   tipo_documento_id int not null,
+  apellidos varchar(100) null,
   nombre varchar(100) not null,
   fecha_nacimiento date,
   tipo_persona_id int not null,
@@ -175,11 +176,7 @@ alter table comprobante_pago add constraint check_igv_comprobante_comprobante_pa
 alter table comprobante_pago add constraint check_monto_comprobante_comprobante_pago check (monto_comprobante > 0.00 :: money);
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
-<<<<<<< HEAD
 alter table comprobante_pago constraint unique (tipo_comprobante_id,numero_comprobante);
-=======
---alter table comprobante_pago constraint unique (comprobante_id,tipo_comprobante_id,numero_comprobante);
->>>>>>> 9b8fce04d3489a39f12bb877faee5681760a092e
 
 create table detalle_comprobante ( 
   comprobante_det_id serial primary key, 
