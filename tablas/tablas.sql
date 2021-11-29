@@ -75,7 +75,7 @@ alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_per
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
 alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\A-Z]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
-alter table cliente add constraint unique (cliente_id, tipo_documento_id, numero_documento);
+alter table cliente add constraint unique (tipo_documento_id, numero_documento);
 
 create table tipo_transaccion(
   tipo_transaccion_id int primary key,
@@ -176,7 +176,7 @@ alter table comprobante_pago add constraint check_igv_comprobante_comprobante_pa
 alter table comprobante_pago add constraint check_monto_comprobante_comprobante_pago check (monto_comprobante > 0.00 :: money);
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
-alter table comprobante_pago constraint unique (comprobante_id,tipo_comprobante_id,numero_comprobante);
+alter table comprobante_pago constraint unique (tipo_comprobante_id,numero_comprobante);
 
 create table detalle_comprobante ( 
   comprobante_det_id serial primary key, 
