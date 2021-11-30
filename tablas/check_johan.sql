@@ -34,9 +34,9 @@ alter table transaccion add constraint check_tipo_transaccion_id_transaccion che
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','D'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
-alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
-alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
-alter table transaccion add constraint check_fecha_transaccion_transaccion check (fecha_transaccion >= current_date);
+-- alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
+alter table transaccion add constraint check_fecha_salida_transaccion check (/*fecha_salida >= current_date and*/ fecha_salida >= fecha_entrada);
+-- alter table transaccion add constraint check_fecha_transaccion_transaccion check (fecha_transaccion >= current_date);
 
 -- VALIDACION TABLA TRANSACCION_ALOJAMIENTO
 alter table transaccion_alojamiento add constraint check_alojamiento_id_transaccion_alojamiento check (alojamiento_id > 0);
