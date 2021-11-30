@@ -1,0 +1,3 @@
+-- Implementar una función que la cantidad y los tipos de caracteres que componen el 
+-- número de documento del cliente según el tipo de persona y el tipo de documento
+-- Esta función también también deberá validad que si es una persona jurídica el campo apellidos debe contener null

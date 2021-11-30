@@ -1,20 +1,28 @@
 --Funcion para ver el monto total de la transaccion
 
-Create or replace function fn_monto_total_transaccion(id_transaccion) returns float
+Create or replace function fn_monto_total_transaccion(id_transaccion int) returns money as
 $$
 Declare
 precio_habitacion money;
 cantidad_dias int;
-monto_total_servicio;
+monto_total_servicio money;
+f_entrada date;
+f_salida date;
 Begin
        select sum(monto_servicio) into monto_total_servicio from detalle_servicios
        where transaccion_id=id_transaccion;
 
        select precio_base into precio_habitacion from tipo_habitacion th
-       inner join habitacion hab on hab.tipo_habitacion= th.tipo_habitacion_id
+       inner join habitacion hab on hab.tipo_habitacion_id= th.tipo_habitacion_id
        inner join transaccion using(habitacion_id)
        where transaccion_id=id_transaccion;
        
+       Select fecha_entrada into f_entrada from Transaccion
+       where transaccion_id=id_transaccion;
+       
+       Select fecha_salida into f_salida from Transaccion
+       where transaccion_id=id_transaccion;
+
        if fecha_entrada!=null and fecha_salida!=null then
        select fecha_entrada-fecha_salida into cantidad_dias from Transaccion
        where transaccion_id=id_transaccion;
@@ -37,4 +45,3 @@ Begin
     return cantidad_personas;
 end;
 $$ language 'plpgsql';
-    

@@ -6,23 +6,27 @@ alter table tipo_habitacion add constraint check_precio_base_tipo_habitacio chec
 -- VALIDACION TABLA HABITACION
 alter table habitacion add constraint check_habitacion_id_habitacion check (habitacion_id > 0);
 alter table habitacion add constraint check_numero_habitacion_habitacion check (numero_habitacion > 0);
-alter table habitacion add constraint check_estado_habitacion_habitacion check (estado_habitacion in ('D','O','R'));
+alter table habitacion add constraint check_estado_habitacion_habitacion check (estado_habitacion in ('D','O','R','M'));
 alter table habitacion add constraint check_tipo_habitacion_habitacion check (tipo_habitacion_id > 0);
+
+ALTER TABLE habitacion DROP CONSTRAINT check_estado_habitacion_habitacion;
 
 -- VALIDACION TABLA CLIENTE
 alter table cliente add constraint check_cliente_id_cliente check (cliente_id > 0);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
-alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
+alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id in ('01','04','06','07','11','00'));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
-alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9]{8,12}$');
+alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\a-z\sá-úÁ-Ú]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
+
+ALTER TABLE cliente DROP CONSTRAINT check_numero_documento_cliente;
 
 -- VALIDACION TABLA PAÍS
 alter table pais add constraint chk_pais_id_pais check (pais_id > 0); 
-alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[[a-z\sá-úÁ-Ú]{1,100}$');
-alter table pais add constraint chk_continente check (continente ~* '^[[a-z\sá-úÁ-Ú]{1,9}$');
+alter table pais add constraint chk_nombre_pais check (nombre_pais ~* '^[a-z\sá-úÁ-Ú\-]{1,100}$');
+alter table pais add constraint chk_continente check (continente ~* '^[a-z\sá-úÁ-Ú\-]{1,9}$');
 
 -- VALIDACION TABLA TRANSACCION
 alter table transaccion add constraint check_transaccion_id_transaccion check(transaccion_id > 0);
@@ -30,9 +34,9 @@ alter table transaccion add constraint check_tipo_transaccion_id_transaccion che
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','D'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
-alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
-alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
-alter table transaccion add constraint check_fecha_transaccion_transaccion check (fecha_transaccion >= current_date);
+-- alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
+alter table transaccion add constraint check_fecha_salida_transaccion check (/*fecha_salida >= current_date and*/ fecha_salida >= fecha_entrada);
+-- alter table transaccion add constraint check_fecha_transaccion_transaccion check (fecha_transaccion >= current_date);
 
 -- VALIDACION TABLA TRANSACCION_ALOJAMIENTO
 alter table transaccion_alojamiento add constraint check_alojamiento_id_transaccion_alojamiento check (alojamiento_id > 0);
@@ -51,7 +55,7 @@ alter table tipo_persona add constraint check_descripcion_tipo_persona check (de
 
 -- VALIDACION TABLA TIPO_DOCUMENTO
 alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
-alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,21}$');
+alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[[a-z\sá-úÁ-Ú]{1,2}$');
 
 -- VALIDACION TABLA DETALLE_COMPRABANTEE
 alter table detalle_comprobante add constraint check_comprobante_det_id_detalle_comprobante check (comprobante_det_id > 0);
