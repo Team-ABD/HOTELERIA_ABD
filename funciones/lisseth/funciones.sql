@@ -45,3 +45,16 @@ Begin
     return cantidad_personas;
 end;
 $$ language 'plpgsql';
+
+
+--Habitacion
+
+Create or replace function insertar_habitacion(num_hab int, tip_hab_id char) returns boolean as
+$$
+Declare
+Begin
+  -- Por defecto al registrar una habitacion esta estará desocupada
+  insert into habitacion(numero_habitacion,estado_habitacion,tipo_habitacion_id) values(num_hab, 'D', tip_hab_id)
+
+end;
+$$ language 'plpgsql';
