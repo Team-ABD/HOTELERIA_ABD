@@ -58,7 +58,7 @@ create table cliente (
   cliente_id serial primary key,
   tipo_documento_id int not null,
   apellidos varchar(100) null,
-  nombre varchar(100) not null,
+  nombres varchar(100) not null,
   fecha_nacimiento date,
   tipo_persona_id int not null,
   sexo char(1),
@@ -70,7 +70,7 @@ alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documen
 alter table cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
 alter table cliente add constraint fk3_pais_cliente foreign key (pais_id) references pais (pais_id);
 alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id >0);
-alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
+alter table cliente add constraint check_nombres_cliente check (nombres ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
