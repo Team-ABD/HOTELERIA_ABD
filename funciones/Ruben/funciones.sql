@@ -1,3 +1,4 @@
+--porcentaje de las personas que han reservado en el hotel durante un intervalo de fechas
 Create or replace function fn_porcentaje_personas_reserva(fechaini date, fechafin date) returns varchar as
 $$
 Declare
@@ -9,10 +10,10 @@ porcen varchar;
 Begin
            	--Mostramos el total de personas que se hospedaron en un tiempo determinado
           	Select count(*) into cantidadTot
-          	from transaccion where fecha_transaccion between fechaini and fechafin;
+          	from transaccion where fecha_registro between fechaini and fechafin;
           	--Rescatamos la informacion sobre el total de personas se hospedaron con reserva en un determinado tiempo.
           	Select count(*) into cantidadReserv
-          	from transaccion where tipo =true and fecha_transaccion between fechaini and fechafin;
+          	from transaccion where tipo =true and fecha_registro between fechaini and fechafin;
           --al final se obtiene el porcentaje de las personas hospedadas 
           	porcentaje=cantidadReserv*100/cantidadTot;
           	porcen=porcentaje||'%';
@@ -35,3 +36,19 @@ Exception
 	when others then return false;
 end;
 $$ language 'plpgsql';
+
+--cantidad de numero de clientes entre 2 fechas dadas
+create or replace function fn_num_clientes_por_fecha(fechaini date,fechafin date) 
+returns int
+as
+$$
+Declare 
+cantidad int;
+Begin
+ select count(cli.cliente_id) into cantidad 
+from cliente cli
+inner join transaccion tra ON cli.cliente_id=tra.cliente
+ where tra.fecha_registro between fechaini and fechafin;
+return cantidad;
+end;
+$$ language 'plpgsql'

@@ -37,15 +37,38 @@ VALUES
 INSERT INTO servicio
 	(nombre_servicio)
 VALUES
-	('Minibar'),('Excursiones'),('Transporte'),('Sallón de belleza'),('Sauna'),('Gimnasio'),('Lavandería'),
-	('Alquiler de salas de negociación'),('Tintorería'),('Desayuno');
+	('Minibar'),
+	('Excursiones'),
+	('Transporte'),
+	('Sallón de belleza'),
+	('Sauna'),
+	('Gimnasio'),
+	('Lavandería'),
+	('Alquiler de salas de negociación'),
+	('Tintorería'),
+	('Desayuno');
 
 INSERT INTO habitacion 
 	(numero_habitacion,estado_habitacion, tipo_habitacion_id)
 VALUES 
-(101, 'O', 1),(102, 'R', 2),(103, 'M', 3),(104, 'D', 4),(105, 'R', 5),(106, 'D', 6), 
-(201, 'M', 1),(202, 'O', 2),(203, 'R', 3),(204, 'M', 4),(205, 'R', 5),(206, 'D', 6), 
-(301, 'R', 1),(302, 'O', 2),(303, 'M', 3),(304, 'R', 4),(305, 'D', 5),(306, 'O', 6);
+	(101, 'O', 1),
+	(102, 'R', 2),
+	(103, 'M', 3),
+	(104, 'D', 4),
+	(105, 'R', 5),
+	(106, 'D', 6), 
+	(201, 'M', 1),
+	(202, 'O', 2),
+	(203, 'R', 3),
+	(204, 'M', 4),
+	(205, 'R', 5),
+	(206, 'D', 6),
+	(301, 'R', 1),
+	(302, 'O', 2),
+	(303, 'M', 3),
+	(304, 'R', 4),
+	(305, 'D', 5),
+	(306, 'O', 6);
 
 INSERT INTO cliente
 	(tipo_documento_id, nombre, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
@@ -65,4 +88,34 @@ VALUES
 INSERT INTO tipo_transaccion
 	(tipo_transaccion_id, descripcion)
 VALUES
-	(1,'Reservado'),(2,'Confirmado'),(3,'Concluido');
+	(1,'Reservado'),
+	(2,'Confirmado'),
+	(3,'Concluido');
+
+INSERT INTO transaccion 
+	(tipo_transaccion_id, fecha_entrada, hora_entrada, fecha_salida, hora_salida, estado_pago, habitacion_id, cliente_id)
+VALUES
+	(2, '01-06-2021', '12:00', '05-06-2021', '10:00', 'C', '1', '1'),
+	(2, '05-07-2021', '11:00', null, null, 'P', '20', '5'),
+	(3, '05-08-2021', '07:00', '10-08-2021', '09:00', 'C', '2', '10'),
+	(2, '15-08-2021', '14:00', null, null, 'P', '3', '6'),
+	(1, '19-08-2021', '06:00', null, null, 'P', '12', '8'),
+	(1, '22-08-2021', '10:00', null, null, 'P', '16', '4'),
+	(3, '30-08-2021', '07:30', '01-09-2021', '21:00', 'C', '13', '11'),
+	(1, '03-09-2021', '24:00', null, null, 'P', '25', '5'),
+	(3, '15-09-2021', '12:30', '20-09-2021', '23:00', 'P', '16', '3'),
+	(2, '01-10-2021', '13:00', '05-10-2021', '16:00', 'C', '10', '4');
+
+INSERT INTO transaccion 
+	(tipo_transaccion_id, fecha_entrada, hora_entrada, fecha_salida, hora_salida, estado_pago, habitacion_id, cliente_id)
+VALUES
+	(3,'14-01-2020','21:00','15-01-2020','21:00','C','7','9'),
+	(1,'08-02-2020','16:30','11-02-2020','12:30','P','2','6'),
+	(2,'10-03-2020','08:00','10-03-2020','18:00','C','18','4'),
+	(2,'11-04-2020','15:00','13-04-2020','15:00','P','15','11'),
+	(3,'05-05-2020','19:00','12-05-2020','19:00','C','1','3'),
+	(3,'02-06-2020','23:00','07-06-2020','11:00','P','9','7'),
+	(1,'13-07-2020','07:00','13-07-2020','19:00','C','8','1'),
+	(1,'27-09-2020','18:00','29-09-2020','12:00','P','17','10'),
+	(2,'14-10-2020','22:00','15-10-2020','10:00','C','4','2'),
+	(3,'20-11-2020','12','26-11-2020','12:00','P','10','5');
