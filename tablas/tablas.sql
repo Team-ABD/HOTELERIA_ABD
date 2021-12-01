@@ -149,7 +149,7 @@ create table tipo_comprobante (
 );
 --Restricciones
 alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (tipo_comprobante_id > 0);
-alter table tipo_comprobante add constraint check_descripcion_tipo_comprobante check (descripcion in ('F','B'));
+alter table tipo_comprobante add constraint check_descripcion_tipo_comprobante check (descripcion in ('Factura','Boleta'));
 
 create table comprobante_pago ( 
   comprobante_id serial primary key, 
