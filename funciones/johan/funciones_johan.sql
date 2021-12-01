@@ -1,6 +1,5 @@
--- Implementar una función que la cantidad y los tipos de caracteres que componen el 
--- número de documento del cliente según el tipo de persona y el tipo de documento
--- Esta función también también deberá validad que si es una persona jurídica el campo apellidos debe contener null
+-- Implementar una función que la cantidad de caracteres que componen el número de documento del cliente según el tipo 
+-- de persona y el tipo de documento
 
 -- FUNCIÓN INSERT
     CREATE OR REPLACE FUNCTION fn_insert_cliente(id_tipo_documento int, apellidos_cliente varchar(100), nombres_cliente varchar(100), fecha_nac date, id_tipo_persona int, sexo_cliente char(1), num_doc varchar(15) , id_pais int) returns boolean as
@@ -108,3 +107,11 @@
             end if;
 	    END;
 	$$ LANGUAGE 'plpgsql';
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
