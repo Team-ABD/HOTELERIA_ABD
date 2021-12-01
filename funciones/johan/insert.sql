@@ -71,19 +71,19 @@ VALUES
 	(306, 'O', 6);
 
 INSERT INTO cliente
-	(tipo_documento_id, nombre, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
+	(tipo_documento_id, apellidos, nombre, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
 VALUES
-	(1,'Armando Paredes de las Casas','05-02-1990',1,'M','32165498',82),
-	(4,'Fabiola Estrada Barba','06-04-1989',1,'F','LK1598478453',78),
-	(3,'Constructora San Agustín SAC',null,2,null,'20659832875',82),
-	(3,'Directv Peru SRL',null,2,null,'20951334667',82),
-	(3,'Repsol SA',null,2,null,'20546987231',152),
-	(1, 'Julian Guevara Carrasco', '10-01-1989', 1, 'M', '79623451', 82),
-	(2, 'Lucia Vargas Soriano', '12-03-1995', 1, 'F', 'AC4963527856', 64),
-	(3, 'Mario Sanchez Ruiz', '25-11-1986', 1, 'M', '10185296378', 82),
-	(4, 'Maria Lopez Fernandez', '14-05-1992', 1, 'F', 'AZ3852741523', 91),
-	(5, 'Carlos Benavides Diaz', '11-07-1984', 1, 'M', '789456123123951', 82),
-	(6, 'Nicolas Acuña Bonilla', '22-12-1994', 1, 'M', 'GD1852654321654', 73);
+	(1,'Paredes de las Casas','Armando','05-02-1990',1,'M','32165498',82),
+	(4,'Estrada Barba','Fabiola','06-04-1989',1,'F','LK1598478453',78),
+	(3,null,'Constructora San Agustín SAC',null,2,null,'20659832875',82),
+	(3,null,'Directv Peru SRL',null,2,null,'20951334667',82),
+	(3,null,'Repsol SA',null,2,null,'20546987231',152),
+	(1, 'Guevara Carrasco', 'Julian', '10-01-1989', 1, 'M', '79623451', 82),
+	(2, 'Vargas Soriano', 'Lucia', '12-03-1995', 1, 'F', 'AC4963527856', 64),
+	(3, 'Sanchez Ruiz', 'Mario', '25-11-1986', 1, 'M', '10185296378', 82),
+	(4, 'Lopez Fernandez', 'Maria', '14-05-1992', 1, 'F', 'AZ3852741523', 91),
+	(5, 'Benavides Diaz', 'Carlos', '11-07-1984', 1, 'M', '789456123123951', 82),
+	(6, 'Acuña Bonilla', 'Nicolas', '22-12-1994', 1, 'M', 'GD1852654321654', 73);
 
 INSERT INTO tipo_transaccion
 	(tipo_transaccion_id, descripcion)
