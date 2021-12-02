@@ -33,7 +33,7 @@ create table tipo_documento(
 );
 --Restricciones
 -- alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
-alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,2}$');
+alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,21}$');
 
 create table tipo_persona(
 	tipo_persona_id int primary key,
