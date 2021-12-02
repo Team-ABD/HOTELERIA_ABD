@@ -123,6 +123,7 @@ alter table transaccion_alojamiento add constraint fk1_transAloj_transaccion for
 alter table transaccion_alojamiento add constraint fk2_transAloj_transaccion foreign key (transaccion_id) references transaccion (transaccion_id);
 alter table transaccion_alojamiento add constraint check_transaccion_transaccion_alojamiento check (transaccion_id > 0);
 alter table transaccion_alojamiento add constraint check_cliente_id_transaccion_alojamiento check (cliente_id > 0);
+alter table transaccion_alojamiento add constraint unique_transaccion_alojamiento unique (cliente_id,transaccion_id);
 
 create table detalle_servicios (
   servicio_transaccion_id serial primary key, 
@@ -176,7 +177,7 @@ alter table comprobante_pago add constraint check_igv_comprobante_comprobante_pa
 alter table comprobante_pago add constraint check_monto_comprobante_comprobante_pago check (monto_comprobante > 0.00 :: money);
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
-alter table comprobante_pago add constraint check_unique_tipo_numero_comprobante unique (tipo_comprobante_id,numero_comprobante);
+alter table comprobante_pago add constraint unique_tipo_numero_comprobante unique (tipo_comprobante_id,numero_comprobante);
 
 create table detalle_comprobante ( 
   comprobante_det_id serial primary key, 

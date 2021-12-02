@@ -45,6 +45,8 @@
                     end if;
                 end if;
             end if;
+            EXCEPTION
+                return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
@@ -54,6 +56,8 @@
         DECLARE
         BEGIN
             Delete from cliente where cliente_id = id_cliente
+            EXCEPTION
+                return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
@@ -105,6 +109,8 @@
                     end if;
                 end if;
             end if;
+            EXCEPTION
+            return false;
 	    END;
 	$$ LANGUAGE 'plpgsql';
 
@@ -121,13 +127,11 @@
     $$
         DECLARE
         BEGIN
-            IF FOUND THEN
-                Insert into tipo_comprobante(tipo_comprobante_id, descripcion) 
-                    values (id_tipo_comprobante, descr_tip_comp); 
+            Insert into tipo_comprobante(tipo_comprobante_id, descripcion) 
+                values (id_tipo_comprobante, descr_tip_comp); 
                 return true;
-            ELSE
-                return false;
-            END IF;            
+            Exception
+                return false;       
         END;
     $$ LANGUAGE 'plpgsql';
 -- DELETE
@@ -135,27 +139,23 @@
     $$
         DECLARE
         BEGIN
-            IF FOUND THEN
-                Delete from tipo_comprobante where tipo_comprobante_id = id_tipo_comprobante
+            Delete from tipo_comprobante where tipo_comprobante_id = id_tipo_comprobante;
                 return true;
-            ELSE
+            Exception
                 return false;
-            END IF;
         END;
     $$ LANGUAGE 'plpgsql';
-    
+
 -- UPDATE
     CREATE OR REPLACE FUNCTION fn_update_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar(7)) returns boolean as
     $$
         DECLARE
         BEGIN
-            IF FOUND THEN
-                Update set descripcion = id_tipo_comprobante, descr_tip_comp 
-                    where tipo_comprobante_id = id_tipo_comprobante
+            Update set descripcion = id_tipo_comprobante, descr_tip_comp 
+                where tipo_comprobante_id = id_tipo_comprobante;
                 return true;
-            ELSE
+            Exception
                 return false;
-            END IF;
         END;
     $$ LANGUAGE 'plpgsql';
     
