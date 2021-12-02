@@ -74,7 +74,7 @@ alter table cliente add constraint check_nombres_cliente check (nombres ~* '^[a-
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
-alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\A-Z]{8,15}$');
+alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9A-Z]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
 alter table cliente add constraint check_cliente_tipo_y_numero_documento unique(tipo_documento_id, numero_documento);
 

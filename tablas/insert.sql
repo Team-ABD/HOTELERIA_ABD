@@ -71,7 +71,7 @@ VALUES
 	(306, 'O', 6);
 
 INSERT INTO cliente
-	(tipo_documento_id, apellidos, nombre, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
+	(tipo_documento_id, apellidos, nombres, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
 VALUES
 	(1,'Paredes de las Casas','Armando','05-02-1990',1,'M','32165498',82),
 	(4,'Estrada Barba','Fabiola','06-04-1989',1,'F','LK1598478453',78),
