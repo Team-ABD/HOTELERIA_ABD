@@ -45,6 +45,8 @@
                     end if;
                 end if;
             end if;
+            EXCEPTION
+                return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
@@ -54,6 +56,8 @@
         DECLARE
         BEGIN
             Delete from cliente where cliente_id = id_cliente
+            EXCEPTION
+                return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
@@ -105,6 +109,8 @@
                     end if;
                 end if;
             end if;
+            EXCEPTION
+            return false;
 	    END;
 	$$ LANGUAGE 'plpgsql';
 
