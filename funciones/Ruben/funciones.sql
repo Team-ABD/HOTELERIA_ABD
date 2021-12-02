@@ -8,7 +8,7 @@ porcen varchar;
 Begin
            	--Mostramos el total de personas que se hospedaron en un tiempo determinado
           	Select count(*) into cantidadTot
-          	from transaccion where fecha_registro between fechaini and fechafin;
+          	from transaccion where fecha_transaccion between fechaini and fechafin;
           	--Rescatamos la informacion sobre el total de personas se hospedaron con reserva en un determinado tiempo.
           	Select count(*) into cantidadReserv
           	from transaccion where tipo =1 and fecha_registro between fechaini and fechafin;

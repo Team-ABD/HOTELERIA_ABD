@@ -1,9 +1,9 @@
 --insertar tabla transaccion alojamiento
-Create or replace function fn_insert_transac_alojamiento(alojamid int, transid int, clienid int) returns boolean as
+Create or replace function fn_insert_transac_alojamiento(transid int, clienid int) returns boolean as
 $$
 Declare
 Begin
-   insert into transaccion_alojamiento (alojamid,transid,clienid);
+   insert into transaccion_alojamiento(cliente_id,transaccion_id) values (transid,clienid);
    return true;
 Exception when others then  return false;
 End;
@@ -17,7 +17,7 @@ Declare
 Begin
 update transaccion_alojamiento
 set alojamiento_id=alojamid,transaccion_id=transid,cliente_id=clienid
-where alojamiento_id=alojamid and transaccion_id=transid and cliente_id=clienid;
+where alojamiento_id=alojamid ;
 return true;
 exception when others then
 return false;
@@ -25,12 +25,12 @@ END;
 $$ LANGUAGE 'plpgsql'
 
 --eliminar en la tabla transaccion_alojamiento
-create or replace function fn_delete_transac_alojamiento(alojamid int, transid int, clienid int) returns boolean
+create or replace function fn_delete_transac_alojamiento(alojamid int) returns boolean
 AS
 $$
 Declare
 Begin
-DELETE from transaccion_alojamiento where alojamiento_id=alojamid and transaccion_id=transid and cliente_id=clienid;
+DELETE from transaccion_alojamiento where alojamiento_id=alojamid;
 return true;
 exception when others then return false;
 End;
@@ -39,7 +39,7 @@ $$ LANGUAGE 'plpgsql'
 --TABLA DETALLE SERVICIOS
 --insertar
 create or replace function fn_insert_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
-mont_serv float, servid int, transacid int) returns boolean
+,mont_serv float, servid int, transacid int) returns boolean
 AS
 $$
 Declare
@@ -56,15 +56,15 @@ $$ LANGUAGE 'plpgsql'
 --where det_id=servicio_transaccion_id
 
 --modificar
-create or replace function fn_insert_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
-mont_serv float, servid int, transacid int) returns boolean
+create or replace function fn_update_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
+,mont_serv float, servid int, transacid int) returns boolean
 AS
 $$
 Declare
 det_id int;
 Begin
 update transaccion set fecha_solici=fecha_solicitud, hora_solici=hora_solcitud, descripcion_solici=descripcion_solicitud, mont_serv=monto_servicio
-servid=servicioid, transacid=transaccionid
+,servid=servicioid, transacid=transaccionid
 where det_id=servicio_transaccion_id;
 return true;
 exception when others then
