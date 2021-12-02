@@ -49,26 +49,48 @@ VALUES
 	('Desayuno');
 
 INSERT INTO habitacion 
-	(numero_habitacion,estado_habitacion, tipo_habitacion_id)
+	(numero_habitacion,estado_habitacion,tipo_habitacion_id)
 VALUES 
 	(101, 'O', 1),
 	(102, 'R', 2),
 	(103, 'M', 3),
 	(104, 'D', 4),
 	(105, 'R', 5),
-	(106, 'D', 6), 
+	(106, 'D', 6),
+	(107, 'D', 6), 
+	(108, 'D', 6), 
+	(109, 'D', 6),
+	(110, 'D', 6),   
 	(201, 'M', 1),
 	(202, 'O', 2),
 	(203, 'R', 3),
 	(204, 'M', 4),
 	(205, 'R', 5),
 	(206, 'D', 6),
+	(207, 'D', 6),
+	(208, 'D', 6),
+	(209, 'D', 6),
+	(210, 'D', 6),
 	(301, 'R', 1),
 	(302, 'O', 2),
 	(303, 'M', 3),
 	(304, 'R', 4),
 	(305, 'D', 5),
-	(306, 'O', 6);
+	(306, 'O', 6),
+	(307, 'R', 1),
+	(308, 'R', 1),
+	(309, 'R', 1),
+	(310, 'R', 1),
+	(401, 'R', 1),
+	(402, 'O', 2),
+	(403, 'M', 3),
+	(404, 'R', 4),
+	(405, 'D', 5),
+	(406, 'O', 6),
+	(407, 'R', 1),
+	(408, 'R', 1),
+	(409, 'R', 1),
+	(410, 'R', 1);
 
 INSERT INTO cliente
 	(tipo_documento_id, apellidos, nombres, fecha_nacimiento, tipo_persona_id, sexo, numero_documento, pais_id)
