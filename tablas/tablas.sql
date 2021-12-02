@@ -58,7 +58,7 @@ create table cliente (
   cliente_id serial primary key,
   tipo_documento_id int not null,
   apellidos varchar(100) null,
-  nombre varchar(100) not null,
+  nombres varchar(100) not null,
   fecha_nacimiento date,
   tipo_persona_id int not null,
   sexo char(1),
@@ -70,13 +70,13 @@ alter table cliente add constraint fk1_tipoDoc_cliente foreign key (tipo_documen
 alter table cliente add constraint fk2_tipoPersona_cliente foreign key (tipo_persona_id) references tipo_persona(tipo_persona_id);
 alter table cliente add constraint fk3_pais_cliente foreign key (pais_id) references pais (pais_id);
 alter table cliente add constraint check_tipo_documento_id_cliente check (tipo_documento_id >0);
-alter table cliente add constraint check_nombre_cliente check (nombre ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
+alter table cliente add constraint check_nombres_cliente check (nombres ~* '^[a-z\sá-úÁ-Ú]{1,100}$');
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
 alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\A-Z]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
-alter table cliente add constraint unique (tipo_documento_id, numero_documento);
+alter table cliente add constraint check_cliente_tipo_y_numero_documento unique(tipo_documento_id, numero_documento);
 
 create table tipo_transaccion(
   tipo_transaccion_id int primary key,
@@ -137,8 +137,8 @@ create table detalle_servicios (
 alter table detalle_servicios add constraint fk1_detalle foreign key (transaccion_id) references transaccion (transaccion_id); 
 alter table detalle_servicios add constraint fk2_detalle foreign key (servicio_id) references servicio (servicio_id); 
 alter table detalle_servicios add constraint check_servicio_transaccion_id_detalle_servicios check (servicio_transaccion_id > 0);
-alter table transaccion alter column fecha_solicitud set default current_date;
-alter table transaccion alter column hora_solicitud set default current_time;
+alter table detalle_servicios alter column fecha_solicitud set default current_date;
+alter table detalle_servicios alter column hora_solicitud set default current_time;
 alter table detalle_servicios add constraint check_monto_servicio_detalle_servicios check (monto_servicio > 0.00 :: money);
 alter table detalle_servicios add constraint check_transaccion_id_detalle_servicios check (transaccion_id > 0);
 alter table detalle_servicios add constraint check_servicio_id_detalle_servicios check (servicio_id > 0);
@@ -149,14 +149,14 @@ create table tipo_comprobante (
 );
 --Restricciones
 alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (tipo_comprobante_id > 0);
-alter table tipo_comprobante add constraint check_tipo_comprobante_id_tipo_comprobante check (descripcion in ('F','B'));
+alter table tipo_comprobante add constraint check_descripcion_tipo_comprobante check (descripcion in ('Factura','Boleta'));
 
 create table comprobante_pago ( 
   comprobante_id serial primary key, 
   fecha_comprobante date not null, 
   hora time not null, 
-  tipo_comprobante_id char(1) not null, 
-  numero_comprobante char(14) not null unique,
+  tipo_comprobante_id int not null, 
+  numero_comprobante varchar(14) not null unique,
   sub_total money not null,
   igv money not null,
   monto_comprobante money not null, 
@@ -176,7 +176,7 @@ alter table comprobante_pago add constraint check_igv_comprobante_comprobante_pa
 alter table comprobante_pago add constraint check_monto_comprobante_comprobante_pago check (monto_comprobante > 0.00 :: money);
 alter table comprobante_pago add constraint check_transaccion_id_comprobante_pago check (transaccion_id > 0);
 alter table comprobante_pago add constraint check_cliente_id_comprobante_pago check (cliente_id > 0);
-alter table comprobante_pago constraint unique (tipo_comprobante_id,numero_comprobante);
+alter table comprobante_pago add constraint check_unique_tipo_numero_comprobante unique (tipo_comprobante_id,numero_comprobante);
 
 create table detalle_comprobante ( 
   comprobante_det_id serial primary key, 
@@ -194,3 +194,4 @@ alter table detalle_comprobante add constraint check_comprobante_det_id_detalle_
 alter table detalle_comprobante add constraint check_monto_total_sevicio_detalle_comprobante check (monto_total_servicio > 0.00 :: money);
 alter table detalle_comprobante add constraint check_servicio_id_detalle_comprobante check (servicio_id > 0);
 alter table detalle_comprobante add constraint check_comprobante_id_detalle_comprobante check (comprobante_id > 0);
+
