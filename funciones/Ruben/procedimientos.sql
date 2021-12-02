@@ -1,22 +1,21 @@
 --insertar tabla transaccion alojamiento
-Create or replace function fn_insert_transac_alojamiento(transid int, clienid int) returns boolean as
+Create or replace function fn_insert_transac_alojamiento(clienid int,transid int) returns boolean as
 $$
 Declare
 Begin
-   insert into transaccion_alojamiento(cliente_id,transaccion_id) values (transid,clienid);
+   insert into transaccion_alojamiento(cliente_id,transaccion_id) values (clienid,transid);
    return true;
 Exception when others then  return false;
 End;
 $$ language 'plpgsql';
 
 --modificacion en la tabla transaccion_alojamiento
-create or replace function fn_update_transac_alojamiento(alojamid int, transid int, clienid int) returns boolean
+create or replace function fn_update_transac_alojamiento(alojamid int, clienid int,transid int) returns boolean
 as
 $$
 Declare
 Begin
-update transaccion_alojamiento
-set alojamiento_id=alojamid,transaccion_id=transid,cliente_id=clienid
+update transaccion_alojamiento set alojamiento_id=alojamid,cliente_id=clienid,transaccion_id=transid
 where alojamiento_id=alojamid ;
 return true;
 exception when others then
