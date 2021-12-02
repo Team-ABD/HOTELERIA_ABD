@@ -33,7 +33,7 @@ create table tipo_documento(
 );
 --Restricciones
 -- alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
-alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,2}$');
+alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,21}$');
 
 create table tipo_persona(
 	tipo_persona_id int primary key,
@@ -74,7 +74,7 @@ alter table cliente add constraint check_nombres_cliente check (nombres ~* '^[a-
 alter table cliente add constraint check_fecha_nacimiento_cliente check (fecha_nacimiento < current_date);
 alter table cliente add constraint check_tipo_persona_id_cliente check (tipo_persona_id in (1,2));
 alter table cliente add constraint check_sexo_cliente check (sexo in ('M','F'));
-alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9\A-Z]{8,15}$');
+alter table cliente add constraint check_numero_documento_cliente check (numero_documento ~ '^[0-9A-Z]{8,15}$');
 alter table cliente add constraint check_pais_cliente check (pais_id > 0);
 alter table cliente add constraint check_cliente_tipo_y_numero_documento unique(tipo_documento_id, numero_documento);
 
@@ -107,8 +107,8 @@ alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_tr
 alter table transaccion alter column fecha_transaccion set default current_date;
 alter table transaccion alter column hora_transaccion set default current_time;
 alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
-alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
-alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
+-- alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
+alter table transaccion add constraint check_fecha_salida_transaccion check (/*fecha_salida >= current_date and*/ fecha_salida >= fecha_entrada);
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','C'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
@@ -168,7 +168,7 @@ alter table comprobante_pago add constraint fk1_transaccion_comprobante foreign 
 alter table comprobante_pago add constraint fk2_cliente_comprobante foreign key (cliente_id) references cliente (cliente_id); 
 alter table comprobante_pago add constraint fk3_tipo_comprobante foreign key (tipo_comprobante_id) references tipo_comprobante (tipo_comprobante_id);
 alter table comprobante_pago add constraint check_comprobante_id_comprobante_pago check (comprobante_id > 0);
-alter table comprobante_pago add constraint check_fecha_comprobante_pago check (fecha_comprobante >= current_date);
+-- alter table comprobante_pago add constraint check_fecha_comprobante_pago check (fecha_comprobante >= current_date);
 alter table comprobante_pago add constraint check_tipo_comprobante_comprobante_pago check (tipo_comprobante_id >0);
 alter table comprobante_pago add constraint check_numero_comprobante_pago check (numero_comprobante ~*'^[0-9]{3,3}[-][0-9]{10,10}$');
 alter table comprobante_pago add constraint check_subtotal_comprobante_pago check (sub_total > 0.00 :: money);

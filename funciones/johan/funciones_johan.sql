@@ -114,4 +114,48 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+-- Funciones par tipo de comprobante
 
+-- INSERT
+    CREATE OR REPLACE FUNCTION fn_insert_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar(7)) returns boolean as
+    $$
+        DECLARE
+        BEGIN
+            IF FOUND THEN
+                Insert into tipo_comprobante(tipo_comprobante_id, descripcion) 
+                    values (id_tipo_comprobante, descr_tip_comp); 
+                return true;
+            ELSE
+                return false;
+            END IF;            
+        END;
+    $$ LANGUAGE 'plpgsql';
+-- DELETE
+    CREATE OR REPLACE FUNCTION fn_delete_tipo_comprobante(id_tipo_comprobante int) returns boolean as
+    $$
+        DECLARE
+        BEGIN
+            IF FOUND THEN
+                Delete from tipo_comprobante where tipo_comprobante_id = id_tipo_comprobante
+                return true;
+            ELSE
+                return false;
+            END IF;
+        END;
+    $$ LANGUAGE 'plpgsql';
+    
+-- UPDATE
+    CREATE OR REPLACE FUNCTION fn_update_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar(7)) returns boolean as
+    $$
+        DECLARE
+        BEGIN
+            IF FOUND THEN
+                Update set descripcion = id_tipo_comprobante, descr_tip_comp 
+                    where tipo_comprobante_id = id_tipo_comprobante
+                return true;
+            ELSE
+                return false;
+            END IF;
+        END;
+    $$ LANGUAGE 'plpgsql';
+    
