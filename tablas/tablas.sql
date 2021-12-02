@@ -168,7 +168,7 @@ alter table comprobante_pago add constraint fk1_transaccion_comprobante foreign 
 alter table comprobante_pago add constraint fk2_cliente_comprobante foreign key (cliente_id) references cliente (cliente_id); 
 alter table comprobante_pago add constraint fk3_tipo_comprobante foreign key (tipo_comprobante_id) references tipo_comprobante (tipo_comprobante_id);
 alter table comprobante_pago add constraint check_comprobante_id_comprobante_pago check (comprobante_id > 0);
-alter table comprobante_pago add constraint check_fecha_comprobante_pago check (fecha_comprobante >= current_date);
+-- alter table comprobante_pago add constraint check_fecha_comprobante_pago check (fecha_comprobante >= current_date);
 alter table comprobante_pago add constraint check_tipo_comprobante_comprobante_pago check (tipo_comprobante_id >0);
 alter table comprobante_pago add constraint check_numero_comprobante_pago check (numero_comprobante ~*'^[0-9]{3,3}[-][0-9]{10,10}$');
 alter table comprobante_pago add constraint check_subtotal_comprobante_pago check (sub_total > 0.00 :: money);
