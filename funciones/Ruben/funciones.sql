@@ -13,7 +13,7 @@ Begin
           	from transaccion where fecha_registro between fechaini and fechafin;
           	--Rescatamos la informacion sobre el total de personas se hospedaron con reserva en un determinado tiempo.
           	Select count(*) into cantidadReserv
-          	from transaccion where tipo =true and fecha_registro between fechaini and fechafin;
+          	from transaccion where tipo =1 and fecha_registro between fechaini and fechafin;
           --al final se obtiene el porcentaje de las personas hospedadas 
           	porcentaje=cantidadReserv*100/cantidadTot;
           	porcen=porcentaje||'%';
