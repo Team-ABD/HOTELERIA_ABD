@@ -38,15 +38,15 @@ $$ LANGUAGE 'plpgsql'
 
 --TABLA DETALLE SERVICIOS
 --insertar
-create or replace function fn_insert_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
+create or replace function fn_insert_detalle_servicios(fecha_solici date, hora_solici time, descripcion_solici varchar
 ,mont_serv float, servid int, transacid int) returns boolean
 AS
 $$
 Declare
 det_id int;
 BEGIN
-select coalesce (max (detalle_id),0)+1 into det_id from detalle_servicios;
-insert into detalle_servicios  values(det_id,serv_trans_id,fecha_solici, hora_solici, descripcion_solici,mont_serv ,servid,transacid);
+select coalesce (max (servicio_transaccion_id),0)+1 into det_id from detalle_servicios;
+insert into detalle_servicios  values(servicio_transaccion_id,fecha_solici, hora_solici, descripcion_solici,mont_serv ,servid,transacid);
 return true;
 EXCEPTION WHEN OTHERS THEN
 return false;
