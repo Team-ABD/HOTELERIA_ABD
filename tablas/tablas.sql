@@ -108,7 +108,7 @@ alter table transaccion alter column fecha_transaccion set default current_date;
 alter table transaccion alter column hora_transaccion set default current_time;
 alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
 -- alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
--- alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= current_date and fecha_salida >= fecha_entrada);
+alter table transaccion add constraint check_fecha_salida_transaccion check (/*fecha_salida >= current_date and*/ fecha_salida >= fecha_entrada);
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','C'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
