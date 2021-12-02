@@ -143,6 +143,7 @@
             END IF;
         END;
     $$ LANGUAGE 'plpgsql';
+    
 -- UPDATE
     CREATE OR REPLACE FUNCTION fn_update_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar(7)) returns boolean as
     $$
