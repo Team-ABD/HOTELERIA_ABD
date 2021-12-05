@@ -158,4 +158,3 @@
                 return false;
         END;
     $$ LANGUAGE 'plpgsql';
-    
