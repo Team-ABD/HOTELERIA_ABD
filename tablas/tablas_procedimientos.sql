@@ -12,7 +12,7 @@ end;
 $$ language 'plpgsql';	
 
 --Modificar un servicio
-Create or replace function fn_update_servicio(id_servicio, nombre) returns boolean as 
+Create or replace function fn_update_servicio(id_servicio int, nombre varchar) returns boolean as 
 $$
 Declare 
 Begin 
@@ -102,11 +102,11 @@ $$ language 'plpgsql';
 
 ------------------------------------------------------------HABITACION------------------------------------------------------------
 --Insertar habitacion
-Create or replace function fn_insert_habitacion(numeroHabitacion int, tipoHabitacion int) returns boolean
+Create or replace function fn_insert_habitacion(numeroHabitacion int, tipoHabitacion int) returns boolean as
 $$
 Declare
 Begin
-   insert into habitacion (numero_habitacion,estado_habitacion,tipo_habitacion) values(numeroHabitacion,false,tipoHabitacion);
+   insert into habitacion (numero_habitacion,estado_habitacion,tipo_habitacion_id) values(numeroHabitacion,'D',tipoHabitacion);
    return true;
 Exception
 	when others then return false;
@@ -249,7 +249,7 @@ BEGIN
     EXCEPTION WHEN OTHERS THEN
         return false;
 END;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
 -- MODIFICAR PAÍS
 CREATE OR REPLACE FUNCTION fn_update_pais(id int, nombre character varying, con character varying) 
@@ -263,19 +263,19 @@ return true;
 EXCEPTION WHEN OTHERS THEN
 return false;
 END;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
 -- ELIMINAR PAÍS
-CREATE OR REPLACE FUNCTION fn_delete_pais(idd int) returns boolean AS
+CREATE OR REPLACE FUNCTION fn_delete_pais(id int) returns boolean AS
 $$
 DECLARE
 BEGIN
-    delete from pais where pais_id=idd;
+    delete from pais where pais_id=id;
         return true;
     EXCEPTION WHEN OTHERS THEN
         return false;
 END;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
 ------------------------------------------------------------ PAÍS ------------------------------------------------------------
 
@@ -326,7 +326,7 @@ $$ LANGUAGE 'plpgsql'
                 end if;
             end if;
             EXCEPTION
-                return false;
+                when others then return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
@@ -335,11 +335,13 @@ $$ LANGUAGE 'plpgsql'
     $$
         DECLARE
         BEGIN
-            Delete from cliente where cliente_id = id_cliente
-            EXCEPTION
-                return false;
-        END;
-    $$ LANGUAGE 'plpgsql';
+            Delete from cliente where cliente_id = id_cliente;
+        return true;
+    Exception
+        when others then return false;
+    end;
+    $$ language 'plpgsql';
+
 
 -- FUNCIÓN UPDATE
     CREATE OR REPLACE FUNCTION fn_update_cliente(id_cliente int, id_tipo_documento int, apellidos_cliente varchar(100), nombres_cliente varchar(100), fecha_nac date, id_tipo_persona int, sexo_cliente char(1), num_doc varchar(15) , id_pais int) returns boolean as
@@ -390,7 +392,7 @@ $$ LANGUAGE 'plpgsql'
                 end if;
             end if;
             EXCEPTION
-            return false;
+	            when others then return false;
 	    END;
 	$$ LANGUAGE 'plpgsql';
 ------------------------------------------------------------ CLIENTE ------------------------------------------------------------
@@ -398,9 +400,33 @@ $$ LANGUAGE 'plpgsql'
 
 ------------------------------------------------------------TIPO_TRANSACCIÓM------------------------------------------------------------
 -- INSERTAR
+Create or replace function fn_insertar_tipo_transaccion(tipo_transaccion_id int, descripcion varchar) returns boolean as
+$$
+Declare
+Begin
+  --La columna descripcion ya cuenta con un check por lo tanto ya no se realiza la validacion
+  insert into tipo_transaccion(tipo_transaccion_id,descripcion) values(tipo_transaccion_id,descripcion);
+  return true;
+Exception 
+    when others then return false;
+end;
+$$ language 'plpgsql';
+
 -- MODIFICAR
+Create or replace function fn_modificar_tipo_transaccion(id_t_trans int, descripcion_t_trans varchar) returns boolean as
+$$
+Declare
+Begin
+  --La columna descripcion ya cuenta con un check por lo tanto ya no se realiza la validacion
+  update tipo_transaccion set descripcion=descripcion_t_trans where tipo_transaccion_id=id_t_trans;
+  return true;
+Exception 
+    when others then return false;
+end;
+$$ language 'plpgsql';
+
 -- ELIMINAR
-function fn_delete_tipo_transaccion(transaccionid int) returns boolean AS
+Create or replace function fn_delete_tipo_transaccion(transaccionid int) returns boolean AS
 $$
 Declare 
 Begin 
@@ -442,7 +468,7 @@ BEGIN
 EXCEPTION 
 	when others then return false;
 END;  
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
 --Update transaccion
 Create or replace function fn_update_transaccion(id int,t_transaccion int,f_entrada date,h_entrada time,f_salida date,h_salida time, estado_pago char, hab_id integer, cliente_id integer) returns boolean as  
@@ -456,7 +482,7 @@ BEGIN
 EXCEPTION 
 	when others then return false;
 END;  
-$$ LANGUAGE 'plpgsql'
+$$ language 'plpgsql';
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
 
 
@@ -492,7 +518,7 @@ return true;
 exception when others then
 return false;
 END;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
 --eliminar en la tabla transaccion_alojamiento
 create or replace function fn_delete_transac_alojamiento(alojamid int) returns boolean
@@ -500,12 +526,11 @@ AS
 $$
 Declare
 Begin
-if
 DELETE from transaccion_alojamiento where alojamiento_id=alojamid;
 return true;
 exception when others then return false;
 End;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 ------------------------------------------------------------TRANSACCIÓN_ALOJAMIENTO------------------------------------------------------------
 
 
@@ -524,9 +549,8 @@ return true;
 EXCEPTION WHEN OTHERS THEN
 return false;
 END;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 
---where det_id=servicio_transaccion_id
 
 --modificar
 create or replace function fn_update_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
@@ -543,7 +567,7 @@ return true;
 exception when others then
 return false;
 END;
-$$ language 'plpgsql'
+$$ language 'plpgsql';
 
 --eliminar
 create or replace function fn_delete_detalle_servicios(det_id int) 
@@ -554,10 +578,10 @@ DECLARE
 BEGIN
 DELETE from detalle_servicios where servicio_transaccion_id=det_id;
 return true;
-exception when others then
-return false;
+exception 
+    when others then return false;
 End;
-$$ LANGUAGE 'plpgsql'
+$$ LANGUAGE 'plpgsql';
 ------------------------------------------------------------DETALLE_SERVICIOS------------------------------------------------------------
 
 
@@ -571,7 +595,7 @@ $$ LANGUAGE 'plpgsql'
                 values (id_tipo_comprobante, descr_tip_comp); 
                 return true;
             Exception
-                return false;       
+                when others then return false;
         END;
     $$ LANGUAGE 'plpgsql';
 -- DELETE
@@ -582,30 +606,34 @@ $$ LANGUAGE 'plpgsql'
             Delete from tipo_comprobante where tipo_comprobante_id = id_tipo_comprobante;
                 return true;
             Exception
-                return false;
+                when others then return false;
         END;
     $$ LANGUAGE 'plpgsql';
 
 -- UPDATE
-    CREATE OR REPLACE FUNCTION fn_update_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar(7)) returns boolean as
+    Create or replace function fn_update_tipo_comprobante(id_tipo_comprobante int, descr_tip_comp varchar) returns boolean as 
     $$
-        DECLARE
-        BEGIN
-            Update set descripcion = id_tipo_comprobante, descr_tip_comp 
-                where tipo_comprobante_id = id_tipo_comprobante;
-                return true;
-            Exception
-                return false;
-        END;
-    $$ LANGUAGE 'plpgsql';
+    Declare 
+    Begin 
+            update tipo_comprobante set descripcion = descr_tip_comp where tipo_comprobante_id = id_tipo_comprobante;
+            return true;
+    Exception 
+        when others then return false;
+    end;
+    $$language 'plpgsql';
+
 ------------------------------------------------------------TIPO_COMPROBANTE------------------------------------------------------------
 
-
 ------------------------------------------------------------COMPROBANTE DE PAGO------------------------------------------------------------
-
+-- INSERT
+-- UPDATE
+-- DELETE
 ------------------------------------------------------------COMPROBANTE DE PAGO------------------------------------------------------------
 
 
 ------------------------------------------------------------DETALLE_COMPROBANTE------------------------------------------------------------
 
+-- INSERT
+-- UPDATE
+-- DELETE
 ------------------------------------------------------------DETALLE_COMPROBANTE------------------------------------------------------------
