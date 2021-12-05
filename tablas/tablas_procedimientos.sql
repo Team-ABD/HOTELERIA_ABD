@@ -101,19 +101,158 @@ $$ language 'plpgsql';
 
 
 ------------------------------------------------------------HABITACION------------------------------------------------------------
+--Insertar habitacion
+Create or replace function fn_insert_habitacion(numeroHabitacion int, tipoHabitacion int) returns boolean
+$$
+Declare
+Begin
+   insert into habitacion (numero_habitacion,estado_habitacion,tipo_habitacion) values(numeroHabitacion,false,tipoHabitacion);
+   return true;
+Exception
+	when others then return false;
+end;
+$$ language 'plpgsql';
+--Modificar habitacion
+Create or replace function fn_update_estado_habitacion(id_hab int, estado char) returns boolean as
+$$
+Declare
+    estado_actual char;
+Begin
+   select estado_habitacion into estado_actual from habitacion where habitacion_id=id_hab;
+   
+    if(estado_actual='D') THEN
+        if(estado='O') THEN
+            update habitacion set estado_habitacion='O' where habitacion_id=id_hab;
+            return true;
+        else
+            update habitacion set estado_habitacion='M' where habitacion_id=id_hab;
+            return true;
+        end if;
+    else
+        update habitacion set estado_habitacion='D' where habitacion_id=id_hab;
+        return true;
+    end if;
+    return false;
+end;
+$$ language 'plpgsql';
 
+--Eliminar habitacion
+Create or replace function fn_delete_habitacion(id_hab int) returns boolean as
+$$
+Declare
+    estado_actual char;
+Begin
+    select estado_habitacion into estado_actual from habitacion where habitacion_id=id_hab;
+  
+    if(estado_actual='D') then
+    delete from habitacion where habitacion_id=id_hab;
+    return true;
+    end if;
+Exception 
+    when others then return false;
+end;
+$$ language 'plpgsql';
 ------------------------------------------------------------HABITACION------------------------------------------------------------
 
 
 ------------------------------------------------------------TIPO_DOCUMENTO------------------------------------------------------------
+--Insertar tipo_documento
+Create or replace function insert_tipo_documento(des character varying) returns boolean as 
+$$
+Declare 
+id int;
+Begin
+	select max(tipo_documento_id)+1 into id from tipo_documento;
+	insert into tipo_documento(tipo_documento_id, descripcion) values (id, des);  
+	return true;
+Exception 
+	when others then return false;
+End;
+$$ language 'plpgsql';
+
+--Eliminar tipo_documento 
+Create or replace function fn_delate_tipo_documento(documentoid int) returns boolean AS
+$$
+Declare 
+Begin 
+	delete from tipo_documento where tipo_documento_id = documentoid;
+	return true;
+Exception
+	when others then return false;
+end;
+$$ language 'plpgsql';
+
+--Modificar tipo_documento
+Create or replace function fn_update_tipo_documento(tipoid int,des character varying) returns boolean as 
+$$
+Declare 
+Begin 
+    update tipo_documento set descripcion = des where tipo_documento_id = tipoid;
+    return true;
+Exception 
+	when others then return false;
+end;
+$$language 'plpgsql';
 ------------------------------------------------------------TIPO_DOCUMENTO------------------------------------------------------------
 
 
 ------------------------------------------------------------TIPO_PERSONA------------------------------------------------------------
+-- INSERTAR
+Create or replace function insertar_tipo_persona(tipo_persona_id int, des varchar) returns boolean as
+$$
+Declare
+Begin
+  --La columna descripcion ya cuenta con un check por lo tanto ya no se realiza la validacion
+  insert into tipo_persona(tipo_persona_id,descripcion) values(tipo_persona_id, des);
+  return true;
+Exception 
+    when others then return false;
+end;
+$$ language 'plpgsql';
+
+-- ELIMINAR
+Create or replace function fn_eliminar_tipo_persona(id_tipo_persona int) returns boolean as
+$$
+Declare
+Begin
+  delete from tipo_persona where tipo_habitacion_id=id_tipo_persona;
+  return true;
+Exception 
+    when others then return false;
+end;
+$$ language 'plpgsql';
+
+-- MODDIFICAR
+Create or replace function fn_modificar_tipo_persona(tipo_persona int, des varchar) returns boolean as
+$$
+Declare 
+Begin 
+	update tipo_persona set descripcion = des where tipo_persona_id = tipo_persona;
+	return true;
+Exception
+	when others then return false;
+end;
+$$ language 'plpgsql';
 ------------------------------------------------------------TIPO_PERSONA------------------------------------------------------------
 
 
 ------------------------------------------------------------ PAÍS ------------------------------------------------------------
+-- INSERTAR PAÍS
+-- MODIFICAR PAÍS
+-- ELIMINAR PAÍS
+CREATE OR REPLACE FUNCTION fn_delete_pais(idd int) 
+returns boolean
+AS
+$$
+DECLARE
+BEGIN
+delete from pais where pais_id=idd;
+return true;
+EXCEPTION WHEN OTHERS THEN
+return false;
+END;
+$$ LANGUAGE 'plpgsql'
+
 ------------------------------------------------------------ PAÍS ------------------------------------------------------------
 
 
@@ -234,18 +373,113 @@ $$ language 'plpgsql';
 
 
 ------------------------------------------------------------TIPO_TRANSACCIÓM------------------------------------------------------------
+
 ------------------------------------------------------------TIPO_TRANSACCIÓM------------------------------------------------------------
 
 
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
+
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
 
 
 ------------------------------------------------------------TRANSACCIÓN_ALOJAMIENTO------------------------------------------------------------
+--insertar tabla transaccion alojamiento
+Create or replace function fn_insert_transac_alojamiento(clienid int,transid int) returns boolean as
+$$
+Declare
+doc_tipo int;
+Begin
+Select tipo_persona_id into doc_tipo from tipo_persona where tipo_persona_id=1;
+  if doc_tipo=1 then
+   insert into transaccion_alojamiento(cliente_id,transaccion_id) values (clienid,transid);
+   return true;
+else
+return false;
+end if;
+
+Exception when others then  return false;
+End;
+$$ language 'plpgsql';
+
+
+--modificacion en la tabla transaccion_alojamiento
+create or replace function fn_update_transac_alojamiento(alojamid int, clienid int,transid int) returns boolean
+as
+$$
+Declare
+Begin
+update transaccion_alojamiento set alojamiento_id=alojamid,cliente_id=clienid,transaccion_id=transid
+where alojamiento_id=alojamid ;
+return true;
+exception when others then
+return false;
+END;
+$$ LANGUAGE 'plpgsql'
+
+--eliminar en la tabla transaccion_alojamiento
+create or replace function fn_delete_transac_alojamiento(alojamid int) returns boolean
+AS
+$$
+Declare
+Begin
+if
+DELETE from transaccion_alojamiento where alojamiento_id=alojamid;
+return true;
+exception when others then return false;
+End;
+$$ LANGUAGE 'plpgsql'
 ------------------------------------------------------------TRANSACCIÓN_ALOJAMIENTO------------------------------------------------------------
 
 
 ------------------------------------------------------------DETALLE_SERVICIOS------------------------------------------------------------
+--insertar
+create or replace function fn_insert_detalle_servicios(fecha_solici date, hora_solici time, descripcion_solici varchar
+,mont_serv float, servid int, transacid int) returns boolean
+AS
+$$
+Declare
+det_id int;
+BEGIN
+select coalesce (max (servicio_transaccion_id),0)+1 into det_id from detalle_servicios;
+insert into detalle_servicios  values(servicio_transaccion_id,fecha_solici, hora_solici, descripcion_solici,mont_serv ,servid,transacid);
+return true;
+EXCEPTION WHEN OTHERS THEN
+return false;
+END;
+$$ LANGUAGE 'plpgsql'
+
+--where det_id=servicio_transaccion_id
+
+--modificar
+create or replace function fn_update_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
+,mont_serv float, servid int, transacid int) returns boolean
+AS
+$$
+Declare
+det_id int;
+Begin
+update transaccion set fecha_solici=fecha_solicitud, hora_solici=hora_solcitud, descripcion_solici=descripcion_solicitud, mont_serv=monto_servicio
+,servid=servicioid, transacid=transaccionid
+where det_id=servicio_transaccion_id;
+return true;
+exception when others then
+return false;
+END;
+$$ language 'plpgsql'
+
+--eliminar
+create or replace function fn_delete_detalle_servicios(det_id int) 
+returns boolean
+AS
+$$
+DECLARE
+BEGIN
+DELETE from detalle_servicios where servicio_transaccion_id=det_id;
+return true;
+exception when others then
+return false;
+End;
+$$ LANGUAGE 'plpgsql'
 ------------------------------------------------------------DETALLE_SERVICIOS------------------------------------------------------------
 
 
