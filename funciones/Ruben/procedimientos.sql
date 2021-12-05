@@ -2,12 +2,20 @@
 Create or replace function fn_insert_transac_alojamiento(clienid int,transid int) returns boolean as
 $$
 Declare
+doc_tipo int;
 Begin
+Select tipo_persona_id into doc_tipo from tipo_persona where tipo_persona_id=1;
+  if doc_tipo=1 then
    insert into transaccion_alojamiento(cliente_id,transaccion_id) values (clienid,transid);
    return true;
+else
+return false;
+end if;
+
 Exception when others then  return false;
 End;
 $$ language 'plpgsql';
+
 
 --modificacion en la tabla transaccion_alojamiento
 create or replace function fn_update_transac_alojamiento(alojamid int, clienid int,transid int) returns boolean
@@ -29,6 +37,7 @@ AS
 $$
 Declare
 Begin
+if
 DELETE from transaccion_alojamiento where alojamiento_id=alojamid;
 return true;
 exception when others then return false;
