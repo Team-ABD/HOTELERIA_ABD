@@ -414,9 +414,49 @@ $$ language 'plpgsql';
 
 
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
--- INSERTAR
--- MODIFICAR
--- ELIMINAR
+--Insertar transaccion
+Create or replace function fn_insert_transaccion(tipo_transaccion int, f_entrada date,h_entrada time,hab_id integer, client_id integer)  
+returns boolean as
+$$ 
+Declare 
+Begin 
+	if tipo_transaccion = 1 or tipo_transaccion = 2 then 
+	insert into transaccion(fecha_transaccion, hora_transaccion, tipo_transaccion_id,fecha_entrada,hora_entrada,estado_pago,habitacion_id,cliente_id)
+	values(current_date, current_time, tipo_transaccion,f_entrada,h_entrada,'P',hab_id,client_id);
+	return true;
+	else
+		return false;
+	end if;
+EXCEPTION 
+	when others then return false;
+END; 
+$$ LANGUAGE 'plpgsql';
+
+--Delete transaccion
+Create or replace function fn_delete_transaccion(id int) returns boolean as  
+$$  
+DECLARE  
+BEGIN  
+	delete from transaccion where transaccion_id = id; 
+	return true;  
+EXCEPTION 
+	when others then return false;
+END;  
+$$ LANGUAGE 'plpgsql'
+
+--Update transaccion
+Create or replace function fn_update_transaccion(id int,t_transaccion int,f_entrada date,h_entrada time,f_salida date,h_salida time, estado_pago char, hab_id integer, cliente_id integer) returns boolean as  
+$$  
+DECLARE  
+BEGIN  
+	update transaccion set tipo_transaccion_id = t_transaccion, fecha_entrada = f_entrada, hora_entrada = h_entrada,
+	fecha_salida = f_salida, hora_salida = h_salida, estado_pago = estado_pago,habitacion_id = hab_id,cliente_id = cliente_id  
+	where  transaccion_id=idd;   
+	return true;  
+EXCEPTION 
+	when others then return false;
+END;  
+$$ LANGUAGE 'plpgsql'
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
 
 
