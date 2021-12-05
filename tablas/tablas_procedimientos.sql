@@ -238,18 +238,42 @@ $$ language 'plpgsql';
 
 ------------------------------------------------------------ PAÍS ------------------------------------------------------------
 -- INSERTAR PAÍS
+CREATE OR REPLACE FUNCTION fn_insert_pais(nombre character varying, continente character varying) returns boolean AS
+$$
+DECLARE
+    id int;
+BEGIN
+    select max(pais_id)+1 into id from pais;
+    insert into pais(pais_id,nombre_pais,continente) values(id,nombre,continente);
+        return true;
+    EXCEPTION WHEN OTHERS THEN
+        return false;
+END;
+$$ LANGUAGE 'plpgsql'
+
 -- MODIFICAR PAÍS
--- ELIMINAR PAÍS
-CREATE OR REPLACE FUNCTION fn_delete_pais(idd int) 
+CREATE OR REPLACE FUNCTION fn_update_pais(id int, nombre character varying, con character varying) 
 returns boolean
 AS
 $$
 DECLARE
 BEGIN
-delete from pais where pais_id=idd;
+update pais set nombre_pais=nombre, continente = con where pais_id=idd;
 return true;
 EXCEPTION WHEN OTHERS THEN
 return false;
+END;
+$$ LANGUAGE 'plpgsql'
+
+-- ELIMINAR PAÍS
+CREATE OR REPLACE FUNCTION fn_delete_pais(idd int) returns boolean AS
+$$
+DECLARE
+BEGIN
+    delete from pais where pais_id=idd;
+        return true;
+    EXCEPTION WHEN OTHERS THEN
+        return false;
 END;
 $$ LANGUAGE 'plpgsql'
 
@@ -538,8 +562,10 @@ $$ LANGUAGE 'plpgsql'
 
 
 ------------------------------------------------------------COMPROBANTE DE PAGO------------------------------------------------------------
+
 ------------------------------------------------------------COMPROBANTE DE PAGO------------------------------------------------------------
 
 
 ------------------------------------------------------------DETALLE_COMPROBANTE------------------------------------------------------------
+
 ------------------------------------------------------------DETALLE_COMPROBANTE------------------------------------------------------------
