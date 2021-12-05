@@ -373,12 +373,26 @@ $$ LANGUAGE 'plpgsql'
 
 
 ------------------------------------------------------------TIPO_TRANSACCIÓM------------------------------------------------------------
-
+-- INSERTAR
+-- MODIFICAR
+-- ELIMINAR
+function fn_delete_tipo_transaccion(transaccionid int) returns boolean AS
+$$
+Declare 
+Begin 
+	delete from tipo_transaccion where tipo_transaccion_id = transaccionid;
+	return true;
+Exception
+	when others then return false;
+end;
+$$ language 'plpgsql';
 ------------------------------------------------------------TIPO_TRANSACCIÓM------------------------------------------------------------
 
 
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
-
+-- INSERTAR
+-- MODIFICAR
+-- ELIMINAR
 ------------------------------------------------------------TRANSACCIÓN------------------------------------------------------------
 
 
