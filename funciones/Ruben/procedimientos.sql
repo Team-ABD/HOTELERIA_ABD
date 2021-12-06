@@ -32,14 +32,27 @@ END;
 $$ LANGUAGE 'plpgsql'
 
 --eliminar en la tabla transaccion_alojamiento
-create or replace function fn_delete_transac_alojamiento(alojamid int) returns boolean
+create or replace function fn_delete_transac_alojamiento(alojamid int,transid int) returns boolean
 AS
 $$
 Declare
+estado character;
+hora_sali time;
+fecha_sali date;
 Begin
-if
+Select estado_pago into estado from transaccion where transaccion_id=transid;
+select hora_salida into hora_sali from transaccion where transaccion_id=transid;
+select fecha_salida into fecha_sali from transaccion where transaccion_id=transid;
+  if estado=C then 
+  if hora_sali=true then
+  if fecha_sali=true then
 DELETE from transaccion_alojamiento where alojamiento_id=alojamid;
 return true;
+else
+return false;
+end if;
+end if;
+end if;
 exception when others then return false;
 End;
 $$ LANGUAGE 'plpgsql'
@@ -54,7 +67,7 @@ Declare
 det_id int;
 BEGIN
 select coalesce (max (servicio_transaccion_id),0)+1 into det_id from detalle_servicios;
-insert into detalle_servicios  values(servicio_transaccion_id,fecha_solici, hora_solici, descripcion_solici,mont_serv ,servid,transacid);
+insert into detalle_servicios  values(det_id,fecha_solici, hora_solici, descripcion_solici,mont_serv ,servid,transacid);
 return true;
 EXCEPTION WHEN OTHERS THEN
 return false;
@@ -64,12 +77,11 @@ $$ LANGUAGE 'plpgsql'
 --where det_id=servicio_transaccion_id
 
 --modificar
-create or replace function fn_update_detalle_servicios(serv_trans_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
+create or replace function fn_update_detalle_servicios(det_id int,fecha_solici date, hora_solici time, descripcion_solici varchar
 ,mont_serv float, servid int, transacid int) returns boolean
 AS
 $$
 Declare
-det_id int;
 Begin
 update transaccion set fecha_solici=fecha_solicitud, hora_solici=hora_solcitud, descripcion_solici=descripcion_solicitud, mont_serv=monto_servicio
 ,servid=servicioid, transacid=transaccionid
