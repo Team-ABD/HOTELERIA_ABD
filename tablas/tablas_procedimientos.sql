@@ -447,9 +447,9 @@ $$
 Declare 
 Begin 
 	if tipo_transaccion = 1 or tipo_transaccion = 2 then 
-	insert into transaccion(fecha_transaccion, hora_transaccion, tipo_transaccion_id,fecha_entrada,hora_entrada,estado_pago,habitacion_id,cliente_id)
-	values(current_date, current_time, tipo_transaccion,f_entrada,h_entrada,'P',hab_id,client_id);
-	return true;
+        insert into transaccion(fecha_transaccion, hora_transaccion, tipo_transaccion_id,fecha_entrada,hora_entrada,estado_pago,habitacion_id,cliente_id)
+            values(current_date, current_time, tipo_transaccion,f_entrada,h_entrada,'P',hab_id,client_id);
+        return true;
 	else
 		return false;
 	end if;
