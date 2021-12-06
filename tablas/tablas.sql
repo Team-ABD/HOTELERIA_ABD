@@ -32,7 +32,6 @@ create table tipo_documento(
 	descripcion varchar(21) not null
 );
 --Restricciones
--- alter table tipo_documento add constraint check_tipo_documento_id_tipo_documento check (tipo_documento_id in ('01','04','06','07','11','00'));
 alter table tipo_documento add constraint check_descripcion_tipo_documento check (descripcion ~* '^[a-z\sá-úÁ-Ú]{1,21}$');
 
 create table tipo_persona(
@@ -107,8 +106,7 @@ alter table transaccion add constraint fk3_tipo_transaccion foreign key (tipo_tr
 alter table transaccion alter column fecha_transaccion set default current_date;
 alter table transaccion alter column hora_transaccion set default current_time;
 alter table transaccion add constraint check_tipo_transaccion_id_transaccion check (tipo_transaccion_id > 0);
--- alter table transaccion add constraint check_fecha_entrada_transaccion check (fecha_entrada >= current_date);
-alter table transaccion add constraint check_fecha_salida_transaccion check (/*fecha_salida >= current_date and*/ fecha_salida >= fecha_entrada);
+alter table transaccion add constraint check_fecha_salida_transaccion check (fecha_salida >= fecha_entrada);
 alter table transaccion add constraint check_estado_pago_transaccion check (estado_pago in ('P','C'));
 alter table transaccion add constraint check_habitacion_transaccion check (habitacion_id > 0);
 alter table transaccion add constraint check_cliente_id_transaccion check (cliente_id > 0);
@@ -169,7 +167,6 @@ alter table comprobante_pago add constraint fk1_transaccion_comprobante foreign 
 alter table comprobante_pago add constraint fk2_cliente_comprobante foreign key (cliente_id) references cliente (cliente_id); 
 alter table comprobante_pago add constraint fk3_tipo_comprobante foreign key (tipo_comprobante_id) references tipo_comprobante (tipo_comprobante_id);
 alter table comprobante_pago add constraint check_comprobante_id_comprobante_pago check (comprobante_id > 0);
--- alter table comprobante_pago add constraint check_fecha_comprobante_pago check (fecha_comprobante >= current_date);
 alter table comprobante_pago add constraint check_tipo_comprobante_comprobante_pago check (tipo_comprobante_id >0);
 alter table comprobante_pago add constraint check_numero_comprobante_pago check (numero_comprobante ~*'^[0-9]{3,3}[-][0-9]{10,10}$');
 alter table comprobante_pago add constraint check_subtotal_comprobante_pago check (sub_total > 0.00 :: money);
@@ -195,4 +192,3 @@ alter table detalle_comprobante add constraint check_comprobante_det_id_detalle_
 alter table detalle_comprobante add constraint check_monto_total_sevicio_detalle_comprobante check (monto_total_servicio > 0.00 :: money);
 alter table detalle_comprobante add constraint check_servicio_id_detalle_comprobante check (servicio_id > 0);
 alter table detalle_comprobante add constraint check_comprobante_id_detalle_comprobante check (comprobante_id > 0);
-
