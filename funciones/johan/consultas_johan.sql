@@ -7,5 +7,6 @@ from comprobante_pago comp
     inner join 
 
 
-
+---------------------------------------------------------------------------------
 -- Ingreso acumulados obtenidos por cada tipo de habitación
+
