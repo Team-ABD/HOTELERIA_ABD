@@ -23,9 +23,9 @@ Begin
        Select fecha_salida into f_salida from Transaccion
        where transaccion_id=id_transaccion;
 
-       if fecha_entrada!=null and fecha_salida!=null then
-       select fecha_entrada-fecha_salida into cantidad_dias from Transaccion
-       where transaccion_id=id_transaccion;
+       if f_entrada is not null and f_salida is not null then
+        select f_salida-f_entrada into cantidad_dias from Transaccion
+        where transaccion_id=id_transaccion;
        end if;
        
        return monto_total_servicio + cantidad_dias*precio_habitacion;
