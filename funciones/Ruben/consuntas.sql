@@ -7,11 +7,11 @@ inner join tipo_habitacion thab on hab.tipo_habitacion_id=thab.tipo_habitacion_i
 inner join cliente cli on cli.cliente_id=tra.cliente_id
 where fecha_transaccion='02-12-2021'
 
---mostrar los clientes de tipo natural segun el tipo de habitacion
+--mostrar los clientes de tipo natural y en que numero de habitacion estan hospedados, estado habitacion ocupados
 
-select habitacion.tipo_habitacion_id,concat(apellidos,'',nombres) as cliente from transaccion inner join habitacion on habitacion.habitacion_id=transaccion.habitacion_id
+
+select habitacion.numero_habitacion,concat(apellidos,'',nombres) as cliente from transaccion inner join habitacion on habitacion.habitacion_id=transaccion.habitacion_id
 inner join cliente on cliente.cliente_id=transaccion.cliente_id
 inner join tipo_habitacion on habitacion.tipo_habitacion_id=tipo_habitacion.tipo_habitacion_id
-where cliente.tipo_persona_id=1
-
+where cliente.tipo_persona_id=1 and habitacion.estado_habitacion='O'
 
